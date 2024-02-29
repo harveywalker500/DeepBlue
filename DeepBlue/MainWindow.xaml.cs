@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +16,90 @@ namespace DeepBlue
     /// </summary>
     public partial class MainWindow : Window
     {
+        public UnitTypes unit;
+
+        public enum UnitTypes
+        {
+            Meters,
+            Feet,
+            None
+        }
+
         public MainWindow()
         {
+            unit = UnitTypes.Meters;
+            string disclaimerText = """
+                This dive planning application is intended for use by certified divers only. By utilizing this tool, you acknowledge that you are a qualified diver with the necessary training and experience to plan and execute dives safely.
+                The creator of this application hereby explicitly disclaims any liability for loss of equipment, injuries, or fatalities that may result from the use of this tool. While every effort has been made to provide accurate and reliable information, diving inherently carries risks, and users are responsible for assessing and mitigating these risks themselves.
+                It is imperative to adhere to established diving protocols, exercise caution, and use sound judgment when utilizing this application. The information provided should be used as a reference tool and not as a substitute for proper dive training and certification.
+                By using this application, you agree to release the creator from any and all liability associated with its use, and you accept full responsibility for your actions and the outcomes thereof while diving.
+
+                Dive responsibly and stay safe!
+                """;
+
+            MessageBox.Show(disclaimerText, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
             InitializeComponent();
+        }
+
+        private void UnitsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (UnitsComboBox.SelectedIndex == 0)
+            {
+                this.unit = UnitTypes.Meters;
+                Debug.WriteLine("Meters selected.");
+            }
+            this.unit = UnitTypes.Feet;
+            Debug.WriteLine("Feet selected.");
+        }
+
+        private void CalculateATM_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (unit == UnitTypes.Meters)
+                {
+                    double conversion = (MetricFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text)));
+                    ATMDepth_ATM.Text = conversion.ToString();
+                }
+                else if (unit == UnitTypes.Feet)
+                {
+                    double conversion = (ImperialFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text)));
+                    ATMDepth_ATM.Text = conversion.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Please select a unit type.");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
+}
+
+        private void CalculateDepth_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (unit == UnitTypes.Meters)
+                {
+                    double conversion = (MetricFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text)));
+                    ATMDepth_Depth.Text = conversion.ToString();
+                }
+                else if (unit == UnitTypes.Feet)
+                {
+                    double conversion = (ImperialFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text)));
+                    ATMDepth_Depth.Text = conversion.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Please select a unit type.");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
         }
     }
 }

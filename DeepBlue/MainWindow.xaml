@@ -5,8 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeepBlue"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="DeepBlue" Height="450" Width="800">
     <Grid>
-
+        <TabControl x:Name="MainTab">
+            <TabItem x:Name="FormulasTab" Header="Formulas">
+                <Grid x:Name="FormulasGrid" Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="51*"/>
+                        <ColumnDefinition Width="346*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="ATMDepthSP" Grid.ColumnSpan="2" HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="10,10,0,0">
+                        <Label x:Name="ATMDepthTitle" Content="ATM/Depth Conversion"/>
+                        <Grid x:Name="ATMGrid" Height="23" Width="127">
+                            <TextBox x:Name="ATMDepth_ATM" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
+                            <Label x:Name="ATM" Content="ATM" HorizontalAlignment="Left" VerticalAlignment="Center" Height="23" Width="67"/>
+                        </Grid>
+                        <Grid x:Name="DepthGrid" Height="26" Width="127">
+                            <TextBox x:Name="ATMDepth_Depth" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
+                            <Label x:Name="Depth" Content="Depth" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="67"/>
+                        </Grid>
+                        <Button x:Name="CalculateATM" Content="Calculate ATM" Click="CalculateATM_Click"/>
+                        <Button x:Name="CalculateDepth" Content="Calculate Depth" Click="CalculateDepth_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="SettingsTab" Header="Settings">
+                <Grid x:Name="SettingsGrid" Background="#FFE5E5E5">
+                    <Grid x:Name="Units" HorizontalAlignment="Left" Height="48" Margin="10,15,0,0" VerticalAlignment="Top" Width="120">
+                        <Label x:Name="UnitsLabel" Content="Units" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <ComboBox x:Name="UnitsComboBox" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="UnitsComboBox_SelectionChanged">
+                            <ComboBoxItem x:Name="UnitsCBMetric" Content="Metric"/>
+                            <ComboBoxItem x:Name="UnitsCBImperial" Content="Imperial"/>
+                        </ComboBox>
+                    </Grid>
+                    <Grid x:Name="WaterType" HorizontalAlignment="Left" Height="48" Margin="145,15,0,0" VerticalAlignment="Top" Width="120">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="WaterTypeLabel" Content="Water Type" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <ComboBox x:Name="WaterTypeComboBox" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Width="120" Grid.RowSpan="2">
+                            <ComboBoxItem x:Name="WaterTypeSalt" Content="Salt Water"/>
+                            <ComboBoxItem x:Name="WaterTypeFresh" Content="Fresh Water"/>
+                        </ComboBox>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
