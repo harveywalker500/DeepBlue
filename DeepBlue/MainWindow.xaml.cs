@@ -37,7 +37,7 @@ namespace DeepBlue
                 Dive responsibly and stay safe!
                 """;
 
-            MessageBox.Show(disclaimerText, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show(disclaimerText, "Disclaimer", MessageBoxButton.OK, MessageBoxImage.Warning);
             InitializeComponent();
         }
 
@@ -46,10 +46,17 @@ namespace DeepBlue
             if (UnitsComboBox.SelectedIndex == 0)
             {
                 this.unit = UnitTypes.Meters;
+                ATMDepth_ATM.Text = "";
+                ATMDepth_Depth.Text = "";
                 Debug.WriteLine("Meters selected.");
             }
-            this.unit = UnitTypes.Feet;
-            Debug.WriteLine("Feet selected.");
+            else
+            {
+                this.unit = UnitTypes.Feet;
+                ATMDepth_ATM.Text = "";
+                ATMDepth_Depth.Text = "";
+                Debug.WriteLine("Feet selected.");
+            }
         }
 
         private void CalculateATM_Click(object sender, RoutedEventArgs e)
@@ -58,13 +65,13 @@ namespace DeepBlue
             {
                 if (unit == UnitTypes.Meters)
                 {
-                    double conversion = (MetricFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text)));
-                    ATMDepth_ATM.Text = conversion.ToString();
+                    double conversion = MetricFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
+                    ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
                 }
                 else if (unit == UnitTypes.Feet)
                 {
-                    double conversion = (ImperialFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text)));
-                    ATMDepth_ATM.Text = conversion.ToString();
+                    double conversion = ImperialFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
+                    ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
                 }
                 else
                 {
@@ -75,7 +82,7 @@ namespace DeepBlue
             {
                 MessageBox.Show("Please enter a valid number.");
             }
-}
+        }
 
         private void CalculateDepth_Click(object sender, RoutedEventArgs e)
         {
@@ -83,13 +90,13 @@ namespace DeepBlue
             {
                 if (unit == UnitTypes.Meters)
                 {
-                    double conversion = (MetricFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text)));
-                    ATMDepth_Depth.Text = conversion.ToString();
+                    double conversion = MetricFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
+                    ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
                 }
                 else if (unit == UnitTypes.Feet)
                 {
-                    double conversion = (ImperialFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text)));
-                    ATMDepth_Depth.Text = conversion.ToString();
+                    double conversion = ImperialFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
+                    ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
                 }
                 else
                 {
