@@ -97,6 +97,26 @@ namespace DeepBlue
         {
             return otuMin * time;
         }
+
+        /// <summary>
+        /// Converts metres to feet.
+        /// </summary>
+        /// <param name="metres">Depth in metres.</param>
+        /// <returns>Depth in feet.</returns>
+        public static double MetresToFeet(double metres)
+        {
+            return metres * 3.28084;
+        }
+
+        /// <summary>
+        /// Converts feet to metres.
+        /// </summary>
+        /// <param name="feet">Depth in feet.</param>
+        /// <returns>Depth in metres.</returns>
+        public static double FeetToMetres(double feet)
+        {
+            return feet / 3.28084;
+        }
     }
 
     public class MetricFormulas

@@ -108,5 +108,31 @@ namespace DeepBlue
                 MessageBox.Show("Please enter a valid number.");
             }
         }
+
+        private void CalculateMetres_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                double conversion = CommonFormulas.FeetToMetres(Convert.ToDouble(MetresFeet_Feet.Text));
+                MetresFeet_Metres.Text = Math.Round(conversion, 2).ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
+        }
+
+        private void CalculateFeet_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                double conversion = CommonFormulas.MetresToFeet(Convert.ToDouble(MetresFeet_Metres.Text));
+                MetresFeet_Feet.Text = Math.Round(conversion, 2).ToString();
+            } 
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
+        }
     }
 }
