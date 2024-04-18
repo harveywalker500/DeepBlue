@@ -31,13 +31,14 @@ namespace DeepBlue
             unit = UnitTypes.Meters;
             try
             {
-                string disclaimerText = ReadFile("C:\\Users\\harve\\source\\repos\\DeepBlue\\DeepBlue\\disclaimer.txt");
-                MessageBox.Show(disclaimerText, "Disclaimer", MessageBoxButton.OK, MessageBoxImage.Warning);
+                DisclaimerHandler.showDisclaimer();
                 InitializeComponent();
-            } catch (FileNotFoundException)
+            }
+            catch (FileNotFoundException)
             {
                 MessageBox.Show("Disclaimer file not found. Please ensure that the file 'disclaimer.txt' is in the same directory as the executable.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            } catch (Exception)
+            }
+            catch (Exception)
             {
                 MessageBox.Show("Error reading disclaimer file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -130,37 +131,57 @@ namespace DeepBlue
             {
                 double conversion = CommonFormulas.MetresToFeet(Convert.ToDouble(MetresFeet_Metres.Text));
                 MetresFeet_Feet.Text = Math.Round(conversion, 2).ToString();
-            } 
+            }
             catch
             {
                 MessageBox.Show("Please enter a valid number.");
             }
         }
-        public static string ReadFile(string filePath)
-        {
-            try
-            {
-                if (File.Exists(filePath))
-                {
-                    string FileContent = File.ReadAllText(filePath);
-                    Console.WriteLine($"File '{filePath}' read successfully.");
-                    return FileContent;
-                }
-                else
-                {
-                    throw new FileNotFoundException($"File '{filePath}' not found.");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error reading file '{filePath}': {ex.Message}");
-            }
-        }
+        
 
         private void ShowDisclaimer_Click(object sender, RoutedEventArgs e)
         {
-            string disclaimerText = ReadFile("C:\\Users\\harve\\source\\repos\\DeepBlue\\DeepBlue\\disclaimer.txt");
-            MessageBox.Show(disclaimerText, "Disclaimer", MessageBoxButton.OK, MessageBoxImage.Warning);
+            DisclaimerHandler.showDisclaimer();
+        }
+
+        private void CalculatePO2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                double conversion = CommonFormulas.Po2(Convert.ToDouble(FO2.Text), Convert.ToDouble(P.Text));
+                PO2.Text = (Math.Round(conversion, 2) / 100).ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
+        }
+
+        private void CalculateFO2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                double conversion = CommonFormulas.Fo2(Convert.ToDouble(PO2.Text), Convert.ToDouble(P.Text)) * 100;
+                FO2.Text = Math.Round(conversion, 2).ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
+        }
+
+        private void CalculateP_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                double fo2value = Convert.ToDouble(FO2.Text) / 100;
+                double conversion = CommonFormulas.Pressure(fo2value, Convert.ToDouble(P.Text));
+                P.Text = Math.Round(conversion, 2).ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
         }
     }
 }
