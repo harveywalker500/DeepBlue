@@ -11,7 +11,7 @@
             <TabItem x:Name="FormulasTab" Header="Formulas">
                 <Grid x:Name="FormulasGrid" Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" MinWidth="150"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel x:Name="ATMDepthSP" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,0" Height="130" Width="134">
@@ -27,7 +27,7 @@
                         <Button x:Name="CalculateATM" Content="Calculate ATM" Click="CalculateATM_Click" Margin="0,10,0,0"/>
                         <Button x:Name="CalculateDepth" Content="Calculate Depth" Click="CalculateDepth_Click" Margin="0,5,0,0"/>
                     </StackPanel>
-                    <StackPanel x:Name="MetresFeetSP" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Top" Margin="0,145,0,0">
+                    <StackPanel x:Name="MetresFeetSP" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Top" Margin="0,145,0,0" Height="133" Width="138">
                         <Label x:Name="MetresFeetTitle" Content="Metres/Feet Conversion"/>
                         <Grid x:Name="MetresGrid" Height="26" Width="127">
                             <Label x:Name="Metres" Content="Metres" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -40,6 +40,39 @@
                         <Button x:Name="CalculateMetres" Content="Calculate Metres" Click="CalculateMetres_Click" Margin="0,10,0,0"/>
                         <Button x:Name="CalculateFeet" Content="Calculate Feet" Click="CalculateFeet_Click" Margin="0,5,0,0"/>
                     </StackPanel>
+                    <StackPanel x:Name="PO2Triange" HorizontalAlignment="Center" Margin="0,290,0,0" Orientation="Vertical" VerticalAlignment="Top" Height="136" Width="126">
+                        <Grid x:Name="PO2TriangleTextboxGrid" Height="90">
+                            <StackPanel x:Name="PO2SP" HorizontalAlignment="Center" Margin="0,2,0,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <Label x:Name="PO2Label" HorizontalAlignment="Center" Content="PO2"/>
+                                <TextBox x:Name="PO2" TextWrapping="Wrap" Width="60"/>
+                            </StackPanel>
+                            <StackPanel x:Name="FO2SP" HorizontalAlignment="Left" Margin="0,46,0,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <Label x:Name="FO2Label" HorizontalAlignment="Center" Content="FO2"/>
+                                <TextBox x:Name="FO2" TextWrapping="Wrap" Width="60"/>
+                            </StackPanel>
+                            <StackPanel x:Name="PSP" HorizontalAlignment="Left" Margin="65,46,0,0" Orientation="Vertical" VerticalAlignment="Top">
+                                <Label x:Name="PLabel" HorizontalAlignment="Center" Content="P"/>
+                                <TextBox x:Name="P" TextWrapping="Wrap" Width="60"/>
+
+                            </StackPanel>
+
+                        </Grid>
+                        <Grid x:Name="PO2TriangleButtonGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Label x:Name="CalculatePO2GridLabel" Content="Calculate..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <StackPanel x:Name="CalculatePO2GridSP" HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
+                                <Button x:Name="CalculatePO2" Content="PO2" Height="20" Width="26" Click="CalculatePO2_Click"/>
+                                <Button x:Name="CalculateFO2" Content="FO2" Height="20" Width="24" Margin="10,0,0,0" Click="CalculateFO2_Click"/>
+                                <Button x:Name="CalculateP" Content="Pressure" Height="20" Width="49" Margin="10,0,0,0" Click="CalculateP_Click"/>
+
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+
                 </Grid>
             </TabItem>
             <TabItem x:Name="SettingsTab" Header="Settings">
@@ -62,7 +95,7 @@
                             <ComboBoxItem x:Name="WaterTypeFresh" Content="Fresh Water"/>
                         </ComboBox>
                     </Grid>
-                    <Button x:Name="ShowDisclaimer" Content="Show Disclaimer" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Click="ShowDisclaimer_Click" Width="120"/>
+                    <Button x:Name="ShowDisclaimerButton" Content="Show Disclaimer" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Click="ShowDisclaimer_Click" Width="120"/>
                 </Grid>
             </TabItem>
         </TabControl>

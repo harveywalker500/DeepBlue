@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DeepBlue
+﻿namespace DeepBlue
 {
     public class CommonFormulas
     {
@@ -189,18 +183,6 @@ namespace DeepBlue
         }
 
         /// <summary>
-        /// Ascent time.
-        /// </summary>
-        /// <param name="bottom">Bottom depth.</param>
-        /// <param name="stop">Stop depth.</param>
-        /// <param name="rate">Rate of ascent.</param>
-        /// <returns>Ascent time.</returns>
-        public static double AscentTime(double bottom, double stop, double rate)
-        {
-            return (bottom - stop) / rate;
-        }
-
-        /// <summary>
         /// Turn pressure.
         /// </summary>
         /// <param name="start">Starting pressure.</param>
@@ -300,18 +282,6 @@ namespace DeepBlue
         public static double ActualGasSupply(double volume, double psi, double wPressure)
         {
             return psi / wPressure * volume;
-        }
-
-        /// <summary>
-        /// Turn pressure.
-        /// </summary>
-        /// <param name="start">Starting pressure.</param>
-        /// <param name="bottom">Bottom pressure.</param>
-        /// <param name="cylinder">Cylinder.</param>
-        /// <returns>Turn pressure in psi.</returns>
-        public static double TurnPressure(double start, double bottom, double cylinder)
-        {
-            return start - (bottom / cylinder);
         }
 
         /// <summary>
