@@ -1,0 +1,6 @@
+﻿This dive planning application is intended for use by certified divers only. By utilizing this tool, you acknowledge that you are a qualified diver with the necessary training and experience to plan and execute dives safely.
+The creator of this application hereby explicitly disclaims any liability for loss of equipment, injuries, or fatalities that may result from the use of this tool. While every effort has been made to provide accurate and reliable information, diving inherently carries risks, and users are responsible for assessing and mitigating these risks themselves.
+It is imperative to adhere to established diving protocols, exercise caution, and use sound judgment when utilizing this application. The information provided should be used as a reference tool and not as a substitute for proper dive training and certification.
+By using this application, you agree to release the creator from any and all liability associated with its use, and you accept full responsibility for your actions and the outcomes thereof while diving.
+
+Dive responsibly and stay safe!

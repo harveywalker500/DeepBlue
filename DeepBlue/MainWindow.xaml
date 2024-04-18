@@ -11,10 +11,10 @@
             <TabItem x:Name="FormulasTab" Header="Formulas">
                 <Grid x:Name="FormulasGrid" Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="51*"/>
-                        <ColumnDefinition Width="346*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel x:Name="ATMDepthSP" Grid.ColumnSpan="2" HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="10,10,0,0">
+                    <StackPanel x:Name="ATMDepthSP" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,0" Height="130" Width="134">
                         <Label x:Name="ATMDepthTitle" Content="ATM/Depth Conversion"/>
                         <Grid x:Name="ATMGrid" Height="23" Width="127">
                             <TextBox x:Name="ATMDepth_ATM" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
@@ -24,10 +24,10 @@
                             <TextBox x:Name="ATMDepth_Depth" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
                             <Label x:Name="Depth" Content="Depth" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="67"/>
                         </Grid>
-                        <Button x:Name="CalculateATM" Content="Calculate ATM" Click="CalculateATM_Click"/>
-                        <Button x:Name="CalculateDepth" Content="Calculate Depth" Click="CalculateDepth_Click"/>
+                        <Button x:Name="CalculateATM" Content="Calculate ATM" Click="CalculateATM_Click" Margin="0,10,0,0"/>
+                        <Button x:Name="CalculateDepth" Content="Calculate Depth" Click="CalculateDepth_Click" Margin="0,5,0,0"/>
                     </StackPanel>
-                    <StackPanel x:Name="MetresFeetSP" Grid.ColumnSpan="2" HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="9,130,0,0">
+                    <StackPanel x:Name="MetresFeetSP" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Top" Margin="0,145,0,0">
                         <Label x:Name="MetresFeetTitle" Content="Metres/Feet Conversion"/>
                         <Grid x:Name="MetresGrid" Height="26" Width="127">
                             <Label x:Name="Metres" Content="Metres" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -37,8 +37,8 @@
                             <Label x:Name="Feet" Content="Feet" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <TextBox x:Name="MetresFeet_Feet" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
                         </Grid>
-                        <Button x:Name="CalculateMetres" Content="Calculate Metres" Click="CalculateMetres_Click"/>
-                        <Button x:Name="CalculateFeet" Content="Calculate Feet" Click="CalculateFeet_Click"/>
+                        <Button x:Name="CalculateMetres" Content="Calculate Metres" Click="CalculateMetres_Click" Margin="0,10,0,0"/>
+                        <Button x:Name="CalculateFeet" Content="Calculate Feet" Click="CalculateFeet_Click" Margin="0,5,0,0"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -62,6 +62,7 @@
                             <ComboBoxItem x:Name="WaterTypeFresh" Content="Fresh Water"/>
                         </ComboBox>
                     </Grid>
+                    <Button x:Name="ShowDisclaimer" Content="Show Disclaimer" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Click="ShowDisclaimer_Click" Width="120"/>
                 </Grid>
             </TabItem>
         </TabControl>

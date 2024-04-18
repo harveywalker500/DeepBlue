@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -28,17 +29,18 @@ namespace DeepBlue
         public MainWindow()
         {
             unit = UnitTypes.Meters;
-            string disclaimerText = """
-                This dive planning application is intended for use by certified divers only. By utilizing this tool, you acknowledge that you are a qualified diver with the necessary training and experience to plan and execute dives safely.
-                The creator of this application hereby explicitly disclaims any liability for loss of equipment, injuries, or fatalities that may result from the use of this tool. While every effort has been made to provide accurate and reliable information, diving inherently carries risks, and users are responsible for assessing and mitigating these risks themselves.
-                It is imperative to adhere to established diving protocols, exercise caution, and use sound judgment when utilizing this application. The information provided should be used as a reference tool and not as a substitute for proper dive training and certification.
-                By using this application, you agree to release the creator from any and all liability associated with its use, and you accept full responsibility for your actions and the outcomes thereof while diving.
-
-                Dive responsibly and stay safe!
-                """;
-
-            MessageBox.Show(disclaimerText, "Disclaimer", MessageBoxButton.OK, MessageBoxImage.Warning);
-            InitializeComponent();
+            try
+            {
+                string disclaimerText = ReadFile("C:\\Users\\harve\\source\\repos\\DeepBlue\\DeepBlue\\disclaimer.txt");
+                MessageBox.Show(disclaimerText, "Disclaimer", MessageBoxButton.OK, MessageBoxImage.Warning);
+                InitializeComponent();
+            } catch (FileNotFoundException)
+            {
+                MessageBox.Show("Disclaimer file not found. Please ensure that the file 'disclaimer.txt' is in the same directory as the executable.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            } catch (Exception)
+            {
+                MessageBox.Show("Error reading disclaimer file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void UnitsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -133,6 +135,32 @@ namespace DeepBlue
             {
                 MessageBox.Show("Please enter a valid number.");
             }
+        }
+        public static string ReadFile(string filePath)
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    string FileContent = File.ReadAllText(filePath);
+                    Console.WriteLine($"File '{filePath}' read successfully.");
+                    return FileContent;
+                }
+                else
+                {
+                    throw new FileNotFoundException($"File '{filePath}' not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error reading file '{filePath}': {ex.Message}");
+            }
+        }
+
+        private void ShowDisclaimer_Click(object sender, RoutedEventArgs e)
+        {
+            string disclaimerText = ReadFile("C:\\Users\\harve\\source\\repos\\DeepBlue\\DeepBlue\\disclaimer.txt");
+            MessageBox.Show(disclaimerText, "Disclaimer", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }
