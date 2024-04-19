@@ -40,7 +40,7 @@
         /// </summary>
         /// <param name="volume">Volume of gas.</param>
         /// <param name="reserve">Gas reserve.</param>
-        /// <returns>Gas reserve in L/Cu Ft.</returns>
+        /// <returns>Gas reserve the desired gas.</returns>
         public static double GasReserve(double volume, double reserve)
         {
             return volume / (1 - reserve);

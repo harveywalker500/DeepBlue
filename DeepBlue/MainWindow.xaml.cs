@@ -1,14 +1,6 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DeepBlue
 {
@@ -18,6 +10,8 @@ namespace DeepBlue
     public partial class MainWindow : Window
     {
         public UnitTypes unit;
+        public bool rounding;
+        public WaterTypes water;
 
         public enum UnitTypes
         {
@@ -26,13 +20,29 @@ namespace DeepBlue
             None
         }
 
+        public enum WaterTypes
+        {
+            Salt,
+            Fresh,
+            None
+        }
+
         public MainWindow()
         {
-            unit = UnitTypes.Meters;
             try
             {
                 DisclaimerHandler.showDisclaimer();
                 InitializeComponent();
+
+                // Initial state of settings
+                unit = UnitTypes.Meters;
+                UnitsCBMetric.IsSelected = true;
+
+                rounding = true;
+                RoundingOn.IsChecked = true;
+
+                water = WaterTypes.Salt;
+                WaterTypeSalt.IsSelected = true;
             }
             catch (FileNotFoundException)
             {
@@ -51,14 +61,12 @@ namespace DeepBlue
                 this.unit = UnitTypes.Meters;
                 ATMDepth_ATM.Text = "";
                 ATMDepth_Depth.Text = "";
-                Debug.WriteLine("Meters selected.");
             }
             else
             {
                 this.unit = UnitTypes.Feet;
                 ATMDepth_ATM.Text = "";
                 ATMDepth_Depth.Text = "";
-                Debug.WriteLine("Feet selected.");
             }
         }
 
@@ -69,12 +77,26 @@ namespace DeepBlue
                 if (unit == UnitTypes.Meters)
                 {
                     double conversion = MetricFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
-                    ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
+                    if (rounding)
+                    {
+                        ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
+                    }
+                    else
+                    {
+                        ATMDepth_ATM.Text = conversion.ToString();
+                    }
                 }
                 else if (unit == UnitTypes.Feet)
                 {
                     double conversion = ImperialFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
-                    ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
+                    if (rounding)
+                    {
+                        ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
+                    }
+                    else
+                    {
+                        ATMDepth_ATM.Text = conversion.ToString();
+                    }
                 }
                 else
                 {
@@ -94,12 +116,26 @@ namespace DeepBlue
                 if (unit == UnitTypes.Meters)
                 {
                     double conversion = MetricFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
-                    ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
+                    if (rounding)
+                    {
+                        ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
+                    }
+                    else
+                    {
+                        ATMDepth_Depth.Text = conversion.ToString();
+                    }
                 }
                 else if (unit == UnitTypes.Feet)
                 {
                     double conversion = ImperialFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
-                    ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
+                    if (rounding)
+                    {
+                        ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
+                    }
+                    else
+                    {
+                        ATMDepth_Depth.Text = conversion.ToString();
+                    }
                 }
                 else
                 {
@@ -117,7 +153,14 @@ namespace DeepBlue
             try
             {
                 double conversion = CommonFormulas.FeetToMetres(Convert.ToDouble(MetresFeet_Feet.Text));
-                MetresFeet_Metres.Text = Math.Round(conversion, 2).ToString();
+                if (rounding)
+                {
+                    MetresFeet_Metres.Text = Math.Round(conversion, 2).ToString();
+                }
+                else
+                {
+                    MetresFeet_Metres.Text = conversion.ToString();
+                }
             }
             catch
             {
@@ -130,14 +173,21 @@ namespace DeepBlue
             try
             {
                 double conversion = CommonFormulas.MetresToFeet(Convert.ToDouble(MetresFeet_Metres.Text));
-                MetresFeet_Feet.Text = Math.Round(conversion, 2).ToString();
+                if (rounding)
+                {
+                    MetresFeet_Feet.Text = Math.Round(conversion, 2).ToString();
+                }
+                else
+                {
+                    MetresFeet_Feet.Text = conversion.ToString();
+                }
             }
             catch
             {
                 MessageBox.Show("Please enter a valid number.");
             }
         }
-        
+
 
         private void ShowDisclaimer_Click(object sender, RoutedEventArgs e)
         {
@@ -149,7 +199,14 @@ namespace DeepBlue
             try
             {
                 double conversion = CommonFormulas.Po2(Convert.ToDouble(FO2.Text), Convert.ToDouble(P.Text));
-                PO2.Text = (Math.Round(conversion, 2) / 100).ToString();
+                if (rounding)
+                {
+                    PO2.Text = (Math.Round(conversion, 2) / 100).ToString();
+                }
+                else
+                {
+                    PO2.Text = (conversion / 100).ToString();
+                }
             }
             catch
             {
@@ -162,7 +219,14 @@ namespace DeepBlue
             try
             {
                 double conversion = CommonFormulas.Fo2(Convert.ToDouble(PO2.Text), Convert.ToDouble(P.Text)) * 100;
-                FO2.Text = Math.Round(conversion, 2).ToString();
+                if (rounding)
+                {
+                    FO2.Text = Math.Round(conversion, 2).ToString();
+                }
+                else
+                {
+                    FO2.Text = conversion.ToString();
+                }
             }
             catch
             {
@@ -176,12 +240,70 @@ namespace DeepBlue
             {
                 double fo2value = Convert.ToDouble(FO2.Text) / 100;
                 double conversion = CommonFormulas.Pressure(fo2value, Convert.ToDouble(P.Text));
-                P.Text = Math.Round(conversion, 2).ToString();
+                if (rounding)
+                {
+                    P.Text = Math.Round(conversion, 2).ToString();
+                }
+                else
+                {
+                    P.Text = conversion.ToString();
+                }
             }
             catch
             {
                 MessageBox.Show("Please enter a valid number.");
             }
         }
+
+        private void RoundingOn_Checked(object sender, RoutedEventArgs e)
+        {
+            this.rounding = true;
+        }
+
+        private void RoundingOff_Checked(object sender, RoutedEventArgs e)
+        {
+            this.rounding = false;
+        }
+
+        private void CalculateGasReserve_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (unit == UnitTypes.Meters)
+                {
+                    double calculation = CommonFormulas.GasReserve(Convert.ToDouble(GasReserve_Volume.Text), (Convert.ToDouble(GasReserve_Reserve.Text) / 100));
+                    if (rounding)
+                    {
+                        GasReserveResult.Text = $"Gas Reserve: {Math.Round(calculation, 2).ToString()} litres.";
+                    }
+                    else
+                    {
+                        GasReserveResult.Text = $"Gas Reserve: {calculation.ToString()} litres.";
+                    }
+                }
+                else if (unit == UnitTypes.Feet)
+                {
+                    double calculation = CommonFormulas.GasReserve(Convert.ToDouble(GasReserve_Volume.Text), (Convert.ToDouble(GasReserve_Reserve.Text) / 100));
+                    if (rounding)
+                    {
+                        GasReserveResult.Text = $"Gas Reserve: {Math.Round(calculation, 2).ToString()} cubic feet.";
+                    }
+                    else
+                    {
+                        GasReserveResult.Text = $"Gas Reserve: {calculation.ToString()} cubic feet.";
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a unit type.");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
+
+        }
+
     }
 }
