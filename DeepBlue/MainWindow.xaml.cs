@@ -70,6 +70,21 @@ namespace DeepBlue
             }
         }
 
+        private void ShowDisclaimer_Click(object sender, RoutedEventArgs e)
+        {
+            DisclaimerHandler.showDisclaimer();
+        }
+
+        private void RoundingOn_Checked(object sender, RoutedEventArgs e)
+        {
+            this.rounding = true;
+        }
+
+        private void RoundingOff_Checked(object sender, RoutedEventArgs e)
+        {
+            this.rounding = false;
+        }
+
         private void CalculateATM_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -188,12 +203,6 @@ namespace DeepBlue
             }
         }
 
-
-        private void ShowDisclaimer_Click(object sender, RoutedEventArgs e)
-        {
-            DisclaimerHandler.showDisclaimer();
-        }
-
         private void CalculatePO2_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -253,17 +262,7 @@ namespace DeepBlue
             {
                 MessageBox.Show("Please enter a valid number.");
             }
-        }
-
-        private void RoundingOn_Checked(object sender, RoutedEventArgs e)
-        {
-            this.rounding = true;
-        }
-
-        private void RoundingOff_Checked(object sender, RoutedEventArgs e)
-        {
-            this.rounding = false;
-        }
+        } 
 
         private void CalculateGasReserve_Click(object sender, RoutedEventArgs e)
         {
