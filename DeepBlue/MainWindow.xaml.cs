@@ -9,23 +9,9 @@ namespace DeepBlue
     /// </summary>
     public partial class MainWindow : Window
     {
-        public UnitTypes unit;
+        public App.UnitTypes unit;
         public bool rounding;
-        public WaterTypes water;
-
-        public enum UnitTypes
-        {
-            Meters,
-            Feet,
-            None
-        }
-
-        public enum WaterTypes
-        {
-            Salt,
-            Fresh,
-            None
-        }
+        public App.WaterTypes water;
 
         public MainWindow()
         {
@@ -35,13 +21,13 @@ namespace DeepBlue
                 InitializeComponent();
 
                 // Initial state of settings
-                unit = UnitTypes.Meters;
+                this.unit = App.UnitTypes.Meters;
                 UnitsCBMetric.IsSelected = true;
 
-                rounding = true;
+                this.rounding = true;
                 RoundingOn.IsChecked = true;
 
-                water = WaterTypes.Salt;
+                this.water = App.WaterTypes.Salt;
                 WaterTypeSalt.IsSelected = true;
             }
             catch (FileNotFoundException)
@@ -58,13 +44,13 @@ namespace DeepBlue
         {
             if (UnitsComboBox.SelectedIndex == 0)
             {
-                this.unit = UnitTypes.Meters;
+                this.unit = App.UnitTypes.Meters;
                 ATMDepth_ATM.Text = "";
                 ATMDepth_Depth.Text = "";
             }
             else
             {
-                this.unit = UnitTypes.Feet;
+                this.unit = App.UnitTypes.Feet;
                 ATMDepth_ATM.Text = "";
                 ATMDepth_Depth.Text = "";
             }
@@ -89,7 +75,7 @@ namespace DeepBlue
         {
             try
             {
-                if (unit == UnitTypes.Meters)
+                if (unit == App.UnitTypes.Meters)
                 {
                     double conversion = MetricFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
                     if (rounding)
@@ -101,7 +87,7 @@ namespace DeepBlue
                         ATMDepth_ATM.Text = conversion.ToString();
                     }
                 }
-                else if (unit == UnitTypes.Feet)
+                else if (unit == App.UnitTypes.Feet)
                 {
                     double conversion = ImperialFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
                     if (rounding)
@@ -128,7 +114,7 @@ namespace DeepBlue
         {
             try
             {
-                if (unit == UnitTypes.Meters)
+                if (unit == App.UnitTypes.Meters)
                 {
                     double conversion = MetricFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
                     if (rounding)
@@ -140,7 +126,7 @@ namespace DeepBlue
                         ATMDepth_Depth.Text = conversion.ToString();
                     }
                 }
-                else if (unit == UnitTypes.Feet)
+                else if (unit == App.UnitTypes.Feet)
                 {
                     double conversion = ImperialFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
                     if (rounding)
@@ -268,7 +254,7 @@ namespace DeepBlue
         {
             try
             {
-                if (unit == UnitTypes.Meters)
+                if (unit == App.UnitTypes.Meters)
                 {
                     double calculation = CommonFormulas.GasReserve(Convert.ToDouble(GasReserve_Volume.Text), (Convert.ToDouble(GasReserve_Reserve.Text) / 100));
                     if (rounding)
@@ -280,7 +266,7 @@ namespace DeepBlue
                         GasReserveResult.Text = $"Gas Reserve: {calculation.ToString()} litres.";
                     }
                 }
-                else if (unit == UnitTypes.Feet)
+                else if (unit == App.UnitTypes.Feet)
                 {
                     double calculation = CommonFormulas.GasReserve(Convert.ToDouble(GasReserve_Volume.Text), (Convert.ToDouble(GasReserve_Reserve.Text) / 100));
                     if (rounding)

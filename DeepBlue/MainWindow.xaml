@@ -11,11 +11,10 @@
             <TabItem x:Name="FormulasTab" Header="Formulas">
                 <Grid x:Name="FormulasGrid" Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition MinWidth="150"/>
-                        <ColumnDefinition MinWidth="150"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition MinWidth="150" Width="331*"/>
+                        <ColumnDefinition MinWidth="150" Width="663*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel x:Name="ATMDepthSP" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,0,0" d:IsLocked="True" Height="130" Width="134">
+                    <StackPanel x:Name="ATMDepthSP" HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="453,64,0,0" Height="130" Width="134" Grid.Column="1">
                         <Label x:Name="ATMDepthTitle" Content="ATM/Depth Conversion"/>
                         <Grid x:Name="ATMGrid" Height="23" Width="127">
                             <TextBox x:Name="ATMDepth_ATM" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
@@ -28,7 +27,7 @@
                         <Button x:Name="CalculateATM" Content="Calculate ATM" Click="CalculateATM_Click" Margin="0,10,0,0"/>
                         <Button x:Name="CalculateDepth" Content="Calculate Depth" Click="CalculateDepth_Click" Margin="0,5,0,0"/>
                     </StackPanel>
-                    <StackPanel x:Name="MetresFeetSP" HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Top" Margin="0,145,0,0" d:IsLocked="True" Height="133" Width="136">
+                    <StackPanel x:Name="MetresFeetSP" HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="452,199,0,0" Height="133" Width="136" Grid.Column="1">
                         <Label x:Name="MetresFeetTitle" Content="Metres/Feet Conversion"/>
                         <Grid x:Name="MetresGrid" Height="26" Width="127">
                             <Label x:Name="Metres" Content="Metres" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -41,7 +40,7 @@
                         <Button x:Name="CalculateMetres" Content="Calculate Metres" Click="CalculateMetres_Click" Margin="0,10,0,0"/>
                         <Button x:Name="CalculateFeet" Content="Calculate Feet" Click="CalculateFeet_Click" Margin="0,5,0,0"/>
                     </StackPanel>
-                    <StackPanel x:Name="PO2Triange" HorizontalAlignment="Center" Margin="0,290,0,0" Orientation="Vertical" VerticalAlignment="Top" d:IsLocked="True" Height="136" Width="126">
+                    <StackPanel x:Name="PO2Triange" HorizontalAlignment="Left" Margin="457,344,0,0" Orientation="Vertical" VerticalAlignment="Top" Height="136" Width="126" Grid.Column="1">
                         <Grid x:Name="PO2TriangleTextboxGrid" Height="90">
                             <StackPanel x:Name="PO2SP" HorizontalAlignment="Center" Margin="0,2,0,0" Orientation="Vertical" VerticalAlignment="Top">
                                 <Label x:Name="PO2Label" HorizontalAlignment="Center" Content="PO2"/>
@@ -86,6 +85,12 @@
                         <Button x:Name="CalculateGasReserve" Content="Calculate Gas Reserve" Click="CalculateGasReserve_Click" Margin="0,10,0,0"/>
                         <TextBlock x:Name="GasReserveResult" TextWrapping="Wrap" Text="Gas Reserve:" HorizontalAlignment="Center" Margin="0,10,0,0"/>
 
+                    </StackPanel>
+                    <Frame x:Name="FormulaFrame" Grid.Column="1" Content="Frame"/>
+                    <StackPanel x:Name="FormulaSelectionSP" HorizontalAlignment="Left" Margin="111,58,0,0" Orientation="Vertical" VerticalAlignment="Top">
+                        <Label x:Name="FormulaSelectionLabel" Content="Formula Selection"/>
+
+                        <ComboBox x:Name="FormulaSelectionComboBox" Width="120" SelectionChanged="FormulaSelectionComboBox_SelectionChanged"/>
                     </StackPanel>
 
                 </Grid>
