@@ -10,30 +10,36 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static DeepBlue.MainWindow;
 
-namespace DeepBlue.FormulaPages
+namespace DeepBlue
 {
     /// <summary>
     /// Interaction logic for ATMDepth.xaml
     /// </summary>
-    public partial class ATMDepth : Page
+    public partial class AtmDepth : Window
     {
-        public ATMDepth()
+        private UnitTypes _unit;
+        private WaterTypes _water;
+        private bool _rounding;
+
+        public AtmDepth(UnitTypes unit, WaterTypes water, bool rounding)
         {
             InitializeComponent();
+
+            this._unit = unit;
+            this._water = water;
+            this._rounding = rounding;
         }
 
         private void CalculateATM_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (unit == UnitTypes.Meters)
+                if (_unit == UnitTypes.Meters)
                 {
-                    double conversion = MetricFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
-                    if (rounding)
+                    double conversion = MetricFormulas.DepthToAta(Convert.ToDouble(ATMDepth_Depth.Text));
+                    if (_rounding)
                     {
                         ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
                     }
@@ -42,10 +48,10 @@ namespace DeepBlue.FormulaPages
                         ATMDepth_ATM.Text = conversion.ToString();
                     }
                 }
-                else if (unit == UnitTypes.Feet)
+                else if (_unit == UnitTypes.Feet)
                 {
-                    double conversion = ImperialFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
-                    if (rounding)
+                    double conversion = ImperialFormulas.DepthToAta(Convert.ToDouble(ATMDepth_Depth.Text));
+                    if (_rounding)
                     {
                         ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
                     }
@@ -69,10 +75,10 @@ namespace DeepBlue.FormulaPages
         {
             try
             {
-                if (unit == UnitTypes.Meters)
+                if (_unit == UnitTypes.Meters)
                 {
-                    double conversion = MetricFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
-                    if (rounding)
+                    double conversion = MetricFormulas.AtaToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
+                    if (_rounding)
                     {
                         ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
                     }
@@ -81,10 +87,10 @@ namespace DeepBlue.FormulaPages
                         ATMDepth_Depth.Text = conversion.ToString();
                     }
                 }
-                else if (unit == UnitTypes.Feet)
+                else if (_unit == UnitTypes.Feet)
                 {
-                    double conversion = ImperialFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
-                    if (rounding)
+                    double conversion = ImperialFormulas.AtaToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
+                    if (_rounding)
                     {
                         ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
                     }

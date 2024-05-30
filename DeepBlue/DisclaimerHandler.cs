@@ -7,7 +7,7 @@ namespace DeepBlue
 {
     public class DisclaimerHandler
     {
-        public static void showDisclaimer()
+        public static void ShowDisclaimer()
         {
             string disclaimerText = ReadFile("C:\\Users\\harve\\source\\repos\\DeepBlue\\DeepBlue\\disclaimer.txt");
             MessageBox.Show(disclaimerText, "Disclaimer", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -19,9 +19,9 @@ namespace DeepBlue
             {
                 if (File.Exists(filePath))
                 {
-                    string FileContent = File.ReadAllText(filePath);
+                    string fileContent = File.ReadAllText(filePath);
                     Console.WriteLine($"File '{filePath}' read successfully.");
-                    return FileContent;
+                    return fileContent;
                 }
                 else
                 {

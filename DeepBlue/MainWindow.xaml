@@ -7,127 +7,65 @@
         mc:Ignorable="d"
         Title="DeepBlue" Height="600" Width="1000">
     <Grid>
-        <TabControl x:Name="MainTab">
-            <TabItem x:Name="FormulasTab" Header="Formulas">
-                <Grid x:Name="FormulasGrid" Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition MinWidth="150" Width="331*"/>
-                        <ColumnDefinition MinWidth="150" Width="663*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel x:Name="ATMDepthSP" HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="453,64,0,0" Height="130" Width="134" Grid.Column="1">
-                        <Label x:Name="ATMDepthTitle" Content="ATM/Depth Conversion"/>
-                        <Grid x:Name="ATMGrid" Height="23" Width="127">
-                            <TextBox x:Name="ATMDepth_ATM" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
-                            <Label x:Name="ATM" Content="ATM" HorizontalAlignment="Left" VerticalAlignment="Center" Height="23" Width="67"/>
-                        </Grid>
-                        <Grid x:Name="DepthGrid" Height="26" Width="127">
-                            <TextBox x:Name="ATMDepth_Depth" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
-                            <Label x:Name="Depth" Content="Depth" HorizontalAlignment="Left" VerticalAlignment="Center" Height="26" Width="67"/>
-                        </Grid>
-                        <Button x:Name="CalculateATM" Content="Calculate ATM" Click="CalculateATM_Click" Margin="0,10,0,0"/>
-                        <Button x:Name="CalculateDepth" Content="Calculate Depth" Click="CalculateDepth_Click" Margin="0,5,0,0"/>
-                    </StackPanel>
-                    <StackPanel x:Name="MetresFeetSP" HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="452,199,0,0" Height="133" Width="136" Grid.Column="1">
-                        <Label x:Name="MetresFeetTitle" Content="Metres/Feet Conversion"/>
-                        <Grid x:Name="MetresGrid" Height="26" Width="127">
-                            <Label x:Name="Metres" Content="Metres" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="MetresFeet_Metres" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
-                        </Grid>
-                        <Grid x:Name="FeetGrid" Height="26" Width="127">
-                            <Label x:Name="Feet" Content="Feet" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="MetresFeet_Feet" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
-                        </Grid>
-                        <Button x:Name="CalculateMetres" Content="Calculate Metres" Click="CalculateMetres_Click" Margin="0,10,0,0"/>
-                        <Button x:Name="CalculateFeet" Content="Calculate Feet" Click="CalculateFeet_Click" Margin="0,5,0,0"/>
-                    </StackPanel>
-                    <StackPanel x:Name="PO2Triange" HorizontalAlignment="Left" Margin="457,344,0,0" Orientation="Vertical" VerticalAlignment="Top" Height="136" Width="126" Grid.Column="1">
-                        <Grid x:Name="PO2TriangleTextboxGrid" Height="90">
-                            <StackPanel x:Name="PO2SP" HorizontalAlignment="Center" Margin="0,2,0,0" Orientation="Vertical" VerticalAlignment="Top">
-                                <Label x:Name="PO2Label" HorizontalAlignment="Center" Content="PO2"/>
-                                <TextBox x:Name="PO2" TextWrapping="Wrap" Width="60"/>
-                            </StackPanel>
-                            <StackPanel x:Name="FO2SP" HorizontalAlignment="Left" Margin="0,46,0,0" Orientation="Vertical" VerticalAlignment="Top">
-                                <Label x:Name="FO2Label" HorizontalAlignment="Center" Content="FO2"/>
-                                <TextBox x:Name="FO2" TextWrapping="Wrap" Width="60"/>
-                            </StackPanel>
-                            <StackPanel x:Name="PSP" HorizontalAlignment="Left" Margin="65,46,0,0" Orientation="Vertical" VerticalAlignment="Top">
-                                <Label x:Name="PLabel" HorizontalAlignment="Center" Content="P"/>
-                                <TextBox x:Name="P" TextWrapping="Wrap" Width="60"/>
+        <StackPanel Orientation="Vertical">
+            <Menu x:Name="TopMenu" Height="Auto">
+                <MenuItem x:Name="MenuFile" Header="File"></MenuItem>
+                <MenuItem x:Name="MenuEdit" Header="Edit"></MenuItem>
+                <MenuItem x:Name="MenuView" Header="View"></MenuItem>
+                <MenuItem x:Name="MenuFormulas" Header="Formulas">
+                    <MenuItem x:Name="AtmDepthMenuItem" Header="ATM / Depth" Click="AtmDepthMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="MetresFeetMenuItem" Header="Metres / Feet" Click="MetresFeetMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="PO2TriangleMenuItem" Header="PO2 / FO2 / P" Click="PO2TriangleMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="GasReserveMenuItem" Header="Gas Reserve" Click="GasReserveMenuItem_OnClick"></MenuItem>
+                </MenuItem>
+                <MenuItem x:Name="MenuHelp" Header="Help">
+                    <MenuItem x:Name="ShowDisclaimer" Header="Show Disclaimer" Click="ShowDisclaimer_Click"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <TabControl x:Name="MainTab" Height="549" Width="1000">
+                <TabItem x:Name="FormulasTab" Header="Formulas">
+                    <Grid x:Name="FormulasGrid" Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="150"/>
+                            <ColumnDefinition MinWidth="150"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
 
-                            </StackPanel>
-
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="SettingsTab" Header="Settings">
+                    <Grid x:Name="SettingsGrid" Background="#FFE5E5E5">
+                        <Grid x:Name="Units" HorizontalAlignment="Left" Height="48" Margin="10,15,0,0" VerticalAlignment="Top" Width="120">
+                            <Label x:Name="UnitsLabel" Content="Units" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="UnitsComboBox" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="UnitsComboBox_SelectionChanged"
+                                ToolTip="Metric will use metres and BAR, while Imperial will use feet and PSI.">
+                                <ComboBoxItem x:Name="UnitsCBMetric" Content="Metric"/>
+                                <ComboBoxItem x:Name="UnitsCBImperial" Content="Imperial"/>
+                            </ComboBox>
                         </Grid>
-                        <Grid x:Name="PO2TriangleButtonGrid">
+                        <Grid x:Name="WaterType" HorizontalAlignment="Left" Height="48" Margin="135,15,0,0" VerticalAlignment="Top" Width="120">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Label x:Name="CalculatePO2GridLabel" Content="Calculate..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <StackPanel x:Name="CalculatePO2GridSP" HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
-                                <Button x:Name="CalculatePO2" Content="PO2" Click="CalculatePO2_Click"/>
-                                <Button x:Name="CalculateFO2" Content="FO2" Margin="10,0,0,0" Click="CalculateFO2_Click"/>
-                                <Button x:Name="CalculateP" Content="Pressure" Margin="10,0,0,0" Click="CalculateP_Click"/>
-
-                            </StackPanel>
-
+                            <Label x:Name="WaterTypeLabel" Content="Water Type" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="WaterTypeComboBox" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Width="120" Grid.RowSpan="2">
+                                <ComboBoxItem x:Name="WaterTypeSalt" Content="Salt Water"/>
+                                <ComboBoxItem x:Name="WaterTypeFresh" Content="Fresh Water"/>
+                            </ComboBox>
                         </Grid>
-                    </StackPanel>
-                    <StackPanel x:Name="GasReserveSP" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" Orientation="Vertical" VerticalAlignment="Top" Height="144" Width="128">
-                        <Label x:Name="GasReserveTitle" Content="Gas Reserve" HorizontalAlignment="Center"/>
-                        <Grid x:Name="VolumeGrid" Height="26" Width="127" Margin="0,5,0,0">
-                            <Label x:Name="Volume" Content="Volume" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="GasReserve_Volume" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
-                        </Grid>
-                        <Grid x:Name="ReserveGrid" Height="26" Width="127" Margin="0,5,0,0">
-                            <Label x:Name="Reserve" Content="Reserve %" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBox x:Name="GasReserve_Reserve" HorizontalAlignment="Left" Margin="67,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="60"/>
-                        </Grid>
-                        <Button x:Name="CalculateGasReserve" Content="Calculate Gas Reserve" Click="CalculateGasReserve_Click" Margin="0,10,0,0"/>
-                        <TextBlock x:Name="GasReserveResult" TextWrapping="Wrap" Text="Gas Reserve:" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-
-                    </StackPanel>
-                    <Frame x:Name="FormulaFrame" Grid.Column="1" Content="Frame"/>
-                    <StackPanel x:Name="FormulaSelectionSP" HorizontalAlignment="Left" Margin="111,58,0,0" Orientation="Vertical" VerticalAlignment="Top">
-                        <Label x:Name="FormulaSelectionLabel" Content="Formula Selection"/>
-
-                        <ComboBox x:Name="FormulaSelectionComboBox" Width="120" SelectionChanged="FormulaSelectionComboBox_SelectionChanged"/>
-                    </StackPanel>
-
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="SettingsTab" Header="Settings">
-                <Grid x:Name="SettingsGrid" Background="#FFE5E5E5">
-                    <Grid x:Name="Units" HorizontalAlignment="Left" Height="48" Margin="10,15,0,0" VerticalAlignment="Top" Width="120">
-                        <Label x:Name="UnitsLabel" Content="Units" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <ComboBox x:Name="UnitsComboBox" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="UnitsComboBox_SelectionChanged"
-                                  ToolTip="Metric will use metres and BAR, while Imperial will use feet and PSI.">
-                            <ComboBoxItem x:Name="UnitsCBMetric" Content="Metric"/>
-                            <ComboBoxItem x:Name="UnitsCBImperial" Content="Imperial"/>
-                        </ComboBox>
-                    </Grid>
-                    <Grid x:Name="WaterType" HorizontalAlignment="Left" Height="48" Margin="135,15,0,0" VerticalAlignment="Top" Width="120">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label x:Name="WaterTypeLabel" Content="Water Type" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <ComboBox x:Name="WaterTypeComboBox" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Width="120" Grid.RowSpan="2">
-                            <ComboBoxItem x:Name="WaterTypeSalt" Content="Salt Water"/>
-                            <ComboBoxItem x:Name="WaterTypeFresh" Content="Fresh Water"/>
-                        </ComboBox>
-                    </Grid>
-                    <Grid x:Name="Rounding" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="76" Margin="260,16,0,0">
-                        <Label x:Name="RoundingLabel" Content="Rounding" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                        <Grid x:Name="RoundingComboBox" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,31,0,0">
-                            <RadioButton x:Name="RoundingOn" Content="On" GroupName="Rounding" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="RoundingOn_Checked" 
-                                         ToolTip="Selecting rounding will display all calculations as a 2 significant figure decimal number. This will ensure that the text is readable. All internal calculations will not be rounded."/>
-                            <RadioButton x:Name="RoundingOff" Content="Off" GroupName="Rounding" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Top" Checked="RoundingOff_Checked" 
-                                         ToolTip="Selecting rounding will display all calculations as a 2 significant figure decimal number. This will ensure that the text is readable. All internal calculations will not be rounded."/>
+                        <Grid x:Name="RoundingSP" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="76" Margin="260,16,0,0">
+                            <Label x:Name="RoundingLabel" Content="Rounding" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Grid x:Name="RoundingComboBox" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,31,0,0">
+                                <RadioButton x:Name="RoundingOn" Content="On" GroupName="Rounding" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="RoundingOn_Checked" 
+                                    ToolTip="Selecting rounding will display all calculations as a 2 significant figure decimal number. This will ensure that the text is readable. All internal calculations will not be rounded."/>
+                                <RadioButton x:Name="RoundingOff" Content="Off" GroupName="Rounding" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Top" Checked="RoundingOff_Checked" 
+                                    ToolTip="Selecting rounding will display all calculations as a 2 significant figure decimal number. This will ensure that the text is readable. All internal calculations will not be rounded."/>
+                            </Grid>
                         </Grid>
                     </Grid>
-                    <Button x:Name="ShowDisclaimerButton" Content="Show Disclaimer" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Click="ShowDisclaimer_Click" Width="120" ToolTip="Shows the disclaimer again."/>
-                </Grid>
-            </TabItem>
-        </TabControl>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
     </Grid>
 </Window>

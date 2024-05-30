@@ -198,7 +198,7 @@
         /// </summary>
         /// <param name="ata"></param>
         /// <returns></returns>
-        public static double ATAToDepth(double ata)
+        public static double AtaToDepth(double ata)
         {
             return (ata - 1) * 10.3;
         }
@@ -207,7 +207,7 @@
         /// </summary>
         /// <param name="ata"></param>
         /// <returns></returns>
-        public static double DepthToATA(double ata)
+        public static double DepthToAta(double ata)
         {
             return (ata / 10.3) + 1;
         }
@@ -289,12 +289,12 @@
         /// </summary>
         /// <param name="ata"></param>
         /// <returns></returns>
-        public static double ATAToDepth(double ata)
+        public static double AtaToDepth(double ata)
         {
             return (ata - 1) * 33.79265;
         }
 
-        public static double DepthToATA(double ata)
+        public static double DepthToAta(double ata)
         {
             return (ata / 33.79265) + 1;
         }

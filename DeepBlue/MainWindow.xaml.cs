@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using DeepBlue.FormulaWindows;
 
 namespace DeepBlue
 {
@@ -9,25 +10,25 @@ namespace DeepBlue
     /// </summary>
     public partial class MainWindow : Window
     {
-        public App.UnitTypes unit;
-        public bool rounding;
-        public App.WaterTypes water;
+        public UnitTypes Unit { get; set; }
+        public bool Rounding { get; set; }
+        public WaterTypes Water { get; set; }
 
         public MainWindow()
         {
             try
             {
-                DisclaimerHandler.showDisclaimer();
+                DisclaimerHandler.ShowDisclaimer();
                 InitializeComponent();
 
                 // Initial state of settings
-                this.unit = App.UnitTypes.Meters;
+                this.Unit = UnitTypes.Meters;
                 UnitsCBMetric.IsSelected = true;
 
-                this.rounding = true;
+                this.Rounding = true;
                 RoundingOn.IsChecked = true;
 
-                this.water = App.WaterTypes.Salt;
+                this.Water = WaterTypes.Salt;
                 WaterTypeSalt.IsSelected = true;
             }
             catch (FileNotFoundException)
@@ -44,251 +45,51 @@ namespace DeepBlue
         {
             if (UnitsComboBox.SelectedIndex == 0)
             {
-                this.unit = App.UnitTypes.Meters;
-                ATMDepth_ATM.Text = "";
-                ATMDepth_Depth.Text = "";
+                this.Unit = UnitTypes.Meters;
             }
             else
             {
-                this.unit = App.UnitTypes.Feet;
-                ATMDepth_ATM.Text = "";
-                ATMDepth_Depth.Text = "";
+                this.Unit = UnitTypes.Feet;
             }
         }
 
         private void ShowDisclaimer_Click(object sender, RoutedEventArgs e)
         {
-            DisclaimerHandler.showDisclaimer();
+            DisclaimerHandler.ShowDisclaimer();
         }
 
         private void RoundingOn_Checked(object sender, RoutedEventArgs e)
         {
-            this.rounding = true;
+            this.Rounding = true;
         }
 
         private void RoundingOff_Checked(object sender, RoutedEventArgs e)
         {
-            this.rounding = false;
+            this.Rounding = false;
         }
 
-        private void CalculateATM_Click(object sender, RoutedEventArgs e)
+        private void AtmDepthMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (unit == App.UnitTypes.Meters)
-                {
-                    double conversion = MetricFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
-                    if (rounding)
-                    {
-                        ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
-                    }
-                    else
-                    {
-                        ATMDepth_ATM.Text = conversion.ToString();
-                    }
-                }
-                else if (unit == App.UnitTypes.Feet)
-                {
-                    double conversion = ImperialFormulas.DepthToATA(Convert.ToDouble(ATMDepth_Depth.Text));
-                    if (rounding)
-                    {
-                        ATMDepth_ATM.Text = Math.Round(conversion, 2).ToString();
-                    }
-                    else
-                    {
-                        ATMDepth_ATM.Text = conversion.ToString();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Please select a unit type.");
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid number.");
-            }
+            AtmDepth atmDepth = new AtmDepth(Unit, Water, Rounding);
+            atmDepth.Show();
         }
 
-        private void CalculateDepth_Click(object sender, RoutedEventArgs e)
+        private void MetresFeetMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (unit == App.UnitTypes.Meters)
-                {
-                    double conversion = MetricFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
-                    if (rounding)
-                    {
-                        ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
-                    }
-                    else
-                    {
-                        ATMDepth_Depth.Text = conversion.ToString();
-                    }
-                }
-                else if (unit == App.UnitTypes.Feet)
-                {
-                    double conversion = ImperialFormulas.ATAToDepth(Convert.ToDouble(ATMDepth_ATM.Text));
-                    if (rounding)
-                    {
-                        ATMDepth_Depth.Text = Math.Round(conversion, 2).ToString();
-                    }
-                    else
-                    {
-                        ATMDepth_Depth.Text = conversion.ToString();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Please select a unit type.");
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid number.");
-            }
+            MetresFeet metresFeet = new MetresFeet(Unit, Water, Rounding);
+            metresFeet.Show();
         }
 
-        private void CalculateMetres_Click(object sender, RoutedEventArgs e)
+        private void PO2TriangleMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                double conversion = CommonFormulas.FeetToMetres(Convert.ToDouble(MetresFeet_Feet.Text));
-                if (rounding)
-                {
-                    MetresFeet_Metres.Text = Math.Round(conversion, 2).ToString();
-                }
-                else
-                {
-                    MetresFeet_Metres.Text = conversion.ToString();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid number.");
-            }
+            PO2Triangle po2Triangle = new PO2Triangle(Unit, Water, Rounding);
+            po2Triangle.Show();
         }
 
-        private void CalculateFeet_Click(object sender, RoutedEventArgs e)
+        private void GasReserveMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                double conversion = CommonFormulas.MetresToFeet(Convert.ToDouble(MetresFeet_Metres.Text));
-                if (rounding)
-                {
-                    MetresFeet_Feet.Text = Math.Round(conversion, 2).ToString();
-                }
-                else
-                {
-                    MetresFeet_Feet.Text = conversion.ToString();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid number.");
-            }
+            GasReserve gasReserve = new GasReserve(Unit, Water, Rounding);
+            gasReserve.Show();
         }
-
-        private void CalculatePO2_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                double conversion = CommonFormulas.Po2(Convert.ToDouble(FO2.Text), Convert.ToDouble(P.Text));
-                if (rounding)
-                {
-                    PO2.Text = (Math.Round(conversion, 2) / 100).ToString();
-                }
-                else
-                {
-                    PO2.Text = (conversion / 100).ToString();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid number.");
-            }
-        }
-
-        private void CalculateFO2_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                double conversion = CommonFormulas.Fo2(Convert.ToDouble(PO2.Text), Convert.ToDouble(P.Text)) * 100;
-                if (rounding)
-                {
-                    FO2.Text = Math.Round(conversion, 2).ToString();
-                }
-                else
-                {
-                    FO2.Text = conversion.ToString();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid number.");
-            }
-        }
-
-        private void CalculateP_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                double fo2value = Convert.ToDouble(FO2.Text) / 100;
-                double conversion = CommonFormulas.Pressure(fo2value, Convert.ToDouble(P.Text));
-                if (rounding)
-                {
-                    P.Text = Math.Round(conversion, 2).ToString();
-                }
-                else
-                {
-                    P.Text = conversion.ToString();
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid number.");
-            }
-        } 
-
-        private void CalculateGasReserve_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (unit == App.UnitTypes.Meters)
-                {
-                    double calculation = CommonFormulas.GasReserve(Convert.ToDouble(GasReserve_Volume.Text), (Convert.ToDouble(GasReserve_Reserve.Text) / 100));
-                    if (rounding)
-                    {
-                        GasReserveResult.Text = $"Gas Reserve: {Math.Round(calculation, 2).ToString()} litres.";
-                    }
-                    else
-                    {
-                        GasReserveResult.Text = $"Gas Reserve: {calculation.ToString()} litres.";
-                    }
-                }
-                else if (unit == App.UnitTypes.Feet)
-                {
-                    double calculation = CommonFormulas.GasReserve(Convert.ToDouble(GasReserve_Volume.Text), (Convert.ToDouble(GasReserve_Reserve.Text) / 100));
-                    if (rounding)
-                    {
-                        GasReserveResult.Text = $"Gas Reserve: {Math.Round(calculation, 2).ToString()} cubic feet.";
-                    }
-                    else
-                    {
-                        GasReserveResult.Text = $"Gas Reserve: {calculation.ToString()} cubic feet.";
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Please select a unit type.");
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid number.");
-            }
-
-        }
-
     }
 }
