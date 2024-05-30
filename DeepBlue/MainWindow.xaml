@@ -17,6 +17,7 @@
                     <MenuItem x:Name="MetresFeetMenuItem" Header="Metres / Feet" Click="MetresFeetMenuItem_OnClick"></MenuItem>
                     <MenuItem x:Name="PO2TriangleMenuItem" Header="PO2 / FO2 / P" Click="PO2TriangleMenuItem_OnClick"></MenuItem>
                     <MenuItem x:Name="GasReserveMenuItem" Header="Gas Reserve" Click="GasReserveMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="AscentDepthMenuItem" Header="Ascent Depth" Click="AscentDepthMenuItem_OnClick"></MenuItem>
                 </MenuItem>
                 <MenuItem x:Name="MenuHelp" Header="Help">
                     <MenuItem x:Name="ShowDisclaimer" Header="Show Disclaimer" Click="ShowDisclaimer_Click"></MenuItem>

@@ -91,5 +91,11 @@ namespace DeepBlue
             GasReserve gasReserve = new GasReserve(Unit, Water, Rounding);
             gasReserve.Show();
         }
+
+        private void AscentDepthMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            AscentDepth ascentDepth = new AscentDepth(Unit, Water, Rounding);
+            ascentDepth.Show();
+        }
     }
 }
