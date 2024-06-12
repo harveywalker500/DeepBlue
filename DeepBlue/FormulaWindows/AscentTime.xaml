@@ -1,0 +1,42 @@
+﻿<Window x:Class="DeepBlue.FormulaWindows.AscentTime"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeepBlue.FormulaWindows"
+        mc:Ignorable="d"
+        Title="Ascent Time" SizeToContent="WidthAndHeight">
+    <Grid>
+        <StackPanel x:Name="AscentTimeSP" HorizontalAlignment="Left" Margin="10,10,10,10" Orientation="Vertical" VerticalAlignment="Top" Height="Auto" Width="Auto">
+            <Label x:Name="AscentTimeTitle" Content="Ascent Time" HorizontalAlignment="Center"/>
+            <Grid x:Name="BottomGrid" Height="26" Width="Auto" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="BottomDepth" Content="Bottom Depth" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="AscentTime_BottomDepth" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1"/>
+            </Grid>
+            <Grid x:Name="StopGrid" Height="26" Width="200" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="StopDepth" Content="Stop Depth" HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" Width="100"/>
+                <TextBox x:Name="AscentTime_StopDepth" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1" Height="18"/>
+            </Grid>
+            <Grid x:Name="AscentRateGrid" Height="26" Width="200" Margin="0, 5, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="AscentRate" Content="Ascent Rate" HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" Width="100"/>
+                <TextBox x:Name="AscentTime_AscentRate" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1" Height="18"/>
+            </Grid>
+            <Button x:Name="CalculateAscentTme" Content="Calculate Ascent Time" Click="CalculateAscentTime_OnClick" Margin="0,10,0,0"/>
+            <TextBlock x:Name="AscentTimeResult" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0"><Run Text="Ascent "/><Run Language="en-gb" Text="Time"/><Run Text=":"/></TextBlock>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

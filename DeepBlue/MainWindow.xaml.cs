@@ -97,5 +97,11 @@ namespace DeepBlue
             AscentDepth ascentDepth = new AscentDepth(Unit, Water, Rounding);
             ascentDepth.Show();
         }
+
+        private void AscentTimeMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            AscentTime ascentTime = new AscentTime(Unit, Water, Rounding);
+            ascentTime.Show();
+        }
     }
 }
