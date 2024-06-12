@@ -103,5 +103,11 @@ namespace DeepBlue
             AscentTime ascentTime = new AscentTime(Unit, Water, Rounding);
             ascentTime.Show();
         }
+
+        private void OTUsMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            OTUs otus = new OTUs(Unit, Water, Rounding);
+            otus.Show();
+        }
     }
 }
