@@ -109,5 +109,11 @@ namespace DeepBlue
             OTUs otus = new OTUs(Unit, Water, Rounding);
             otus.Show();
         }
+
+        private void EADMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            EAD ead = new EAD(Unit, Water, Rounding);
+            ead.Show();
+        }
     }
 }

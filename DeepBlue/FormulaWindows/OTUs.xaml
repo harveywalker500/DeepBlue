@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeepBlue.FormulaWindows"
         mc:Ignorable="d"
-        Title="OTUs" Height="450" Width="800">
+        Title="OTUs" SizeToContent="WidthAndHeight">
     <Grid>
-        <StackPanel x:Name="OTUsPerMinute" HorizontalAlignment="Left" Margin="10,10,0,0" Orientation="Vertical" VerticalAlignment="Top" Height="144" Width="200">
+        <StackPanel x:Name="OTUsPerMinute" HorizontalAlignment="Left" Margin="10,10,19,10" Orientation="Vertical" VerticalAlignment="Top" Height="144" Width="200">
             <Label x:Name="OTUsPerMinuteTitle" Content="OTUs Per Minute" HorizontalAlignment="Center"/>
             <Grid x:Name="PO2Grid" Height="26" Width="Auto" Margin="0,5,0,0">
                 <Grid.ColumnDefinitions>
@@ -21,7 +21,7 @@
             <TextBlock x:Name="OTUsPerMinuteResult" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0"><Run Language="en-gb" Text="OTUs Per Minute:"/></TextBlock>
 
         </StackPanel>
-        <StackPanel x:Name="OTUsTimePanel" HorizontalAlignment="Left" Margin="215,10,0,0" Orientation="Vertical" VerticalAlignment="Top" Height="144" Width="200">
+        <StackPanel x:Name="OTUsTimePanel" HorizontalAlignment="Left" Margin="215,10,10,10" Orientation="Vertical" VerticalAlignment="Top" Height="144" Width="200">
             <Label x:Name="OTUsTimeTitle" Content="OTUs Time Calculation" HorizontalAlignment="Center"/>
             <Grid x:Name="OTUsGrid" Height="26" Width="Auto" Margin="0,5,0,0">
                 <Grid.ColumnDefinitions>

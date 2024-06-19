@@ -32,30 +32,43 @@ namespace DeepBlue.FormulaWindows
 
         private void OTUsPerMinuteCalculate_OnClick(object sender, RoutedEventArgs e)
         {
-            double calculation = CommonFormulas.OtuPerMinute(Convert.ToDouble(OTUsPerMinute_PO2.Text));
-            if (_rounding)
+            try
             {
-                OTUsPerMinuteResult.Text = $"OTUs per minute: {Math.Round(calculation, 2).ToString()} OTUs.";
+                double calculation = CommonFormulas.OtuPerMinute(Convert.ToDouble(OTUsPerMinute_PO2.Text));
+                if (_rounding)
+                {
+                    OTUsPerMinuteResult.Text = $"OTUs per minute: {Math.Round(calculation, 2).ToString()} OTUs.";
+                }
+                else
+                {
+                    OTUsPerMinuteResult.Text = $"OTUs per minute: {calculation.ToString()} OTUs.";
+                }
             }
-            else
+            catch 
             {
-                OTUsPerMinuteResult.Text = $"OTUs per minute: {calculation.ToString()} OTUs.";
+                MessageBox.Show("Please enter a valid number.");
             }
         }
 
         private void OTUsTimeCalculate_OnClick(object sender, RoutedEventArgs e)
         {
-            double calculation = CommonFormulas.TotalOtu(Convert.ToDouble(OTUsTime_OTUsPerMinute.Text), (Convert.ToDouble(OTUsTime_Time.Text)));
-
-            if (_rounding)
+            try
             {
-                OTUsTimeResult.Text = $"Total OTUs: {Math.Round(calculation, 2).ToString()} OTUs.";
-            }
-            else
-            {
-                OTUsTimeResult.Text = $"Total OTUs: {calculation.ToString()} OTUs.";
-            }
+                double calculation = CommonFormulas.TotalOtu(Convert.ToDouble(OTUsTime_OTUsPerMinute.Text), (Convert.ToDouble(OTUsTime_Time.Text)));
 
+                if (_rounding)
+                {
+                    OTUsTimeResult.Text = $"Total OTUs: {Math.Round(calculation, 2).ToString()} OTUs.";
+                }
+                else
+                {
+                    OTUsTimeResult.Text = $"Total OTUs: {calculation.ToString()} OTUs.";
+                }
+            } 
+            catch
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
         }
     }
 }

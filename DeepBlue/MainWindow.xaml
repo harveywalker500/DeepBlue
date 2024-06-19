@@ -20,6 +20,8 @@
                     <MenuItem x:Name="AscentDepthMenuItem" Header="Ascent Depth" Click="AscentDepthMenuItem_OnClick"></MenuItem>
                     <MenuItem x:Name="AscentTimeMenuItem" Header="Ascent Time" Click="AscentTimeMenuItem_OnClick"></MenuItem>
                     <MenuItem x:Name="OTUsMenuItem" Header="OTU Per Minute / Total OTUs" Click="OTUsMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="EADMenuItem" Header="EAD" Click="EADMenuItem_Click"></MenuItem>
+                    
                 </MenuItem>
                 <MenuItem x:Name="MenuHelp" Header="Help">
                     <MenuItem x:Name="ShowDisclaimer" Header="Show Disclaimer" Click="ShowDisclaimer_Click"></MenuItem>
