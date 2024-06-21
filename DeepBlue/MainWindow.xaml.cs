@@ -115,5 +115,11 @@ namespace DeepBlue
             EAD ead = new EAD(Unit, Water, Rounding);
             ead.Show();
         }
+
+        private void MaxDepthMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MaxDepth maxDepth = new MaxDepth(Unit, Water, Rounding);
+            maxDepth.Show();
+        }
     }
 }

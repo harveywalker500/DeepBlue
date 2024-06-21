@@ -130,20 +130,11 @@
         /// Maximum depth for bottom gas.
         /// </summary>
         /// <param name="o2">Fraction of oxygen.</param>
+        /// <param name="po2">Max PPO2 at depth</param>
         /// <returns>Maximum depth for bottom gas in meters.</returns>
-        public static double MaxDepthBottom(double o2)
+        public static double MaxDepth(double o2, double po2)
         {
-            return (14 / o2) - 10;
-        }
-
-        /// <summary>
-        /// Maximum depth for decompression gas.
-        /// </summary>
-        /// <param name="o2">Fraction of oxygen.</param>
-        /// <returns>Maximum depth for decompression gas in meters.</returns>
-        public static double MaxDepthDeco(double o2)
-        {
-            return (16 / o2) - 10;
+            return ((po2 * 10) / (o2 / 100)) - 10;
         }
 
         /// <summary>
@@ -230,20 +221,11 @@
         /// Maximum depth for bottom gas.
         /// </summary>
         /// <param name="o2">Fraction of oxygen.</param>
-        /// <returns>Maximum depth for bottom gas in feet.</returns>
-        public static double MaxDepthBottom(double o2)
+        /// <param name="po2">Max parial pressure of oxygen.</param>
+        /// <returns>Maximum depth for gas in feet.</returns>
+        public static double MaxDepth(double o2, double po2)
         {
-            return (46.2 / o2) - 33;
-        }
-
-        /// <summary>
-        /// Maximum depth for decompression gas.
-        /// </summary>
-        /// <param name="o2">Fraction of oxygen.</param>
-        /// <returns>Maximum depth for decompression gas in feet.</returns>
-        public static double MaxDepthDeco(double o2)
-        {
-            return (52.8 / o2) - 33;
+            return (po2 * 33 / (o2 / 100)) - 33;
         }
 
         /// <summary>

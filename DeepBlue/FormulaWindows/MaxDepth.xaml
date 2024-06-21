@@ -1,0 +1,34 @@
+﻿<Window x:Class="DeepBlue.FormulaWindows.MaxDepth"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeepBlue.FormulaWindows"
+        mc:Ignorable="d"
+        Title="MaxDepth" SizeToContent="WidthAndHeight">
+    <Grid>
+        <StackPanel x:Name="MaxDepthSP" HorizontalAlignment="Left" Margin="10,10,10,10" Orientation="Vertical" VerticalAlignment="Top" Height="Auto" Width="Auto">
+            <Label x:Name="MaxDepthTitle" Content="Max Depth" HorizontalAlignment="Center"/>
+            <Grid x:Name="O2PercentageGrid" Height="26" Width="Auto" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="O2PercentageTitle" Content="O2 Percentage" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="MaxDepth_O2Percentage" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1"/>
+            </Grid>
+            <Grid x:Name="PPO2Grid" Height="26" Width="200" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="PO2Title" Content="PO2" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="100"/>
+                <TextBox x:Name="MaxDepth_PO2" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1" Height="18"/>
+            </Grid>
+            <Button x:Name="MaxDepthCalculate" Content="Calculate Max Depth" Click="MaxDepthCalculate_Click" Margin="0,10,0,0"/>
+            <TextBlock x:Name="MaxDepthResult" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0"><Run Language="en-gb" Text="Depth"/><Run Text=":"/></TextBlock>
+            <Label x:Name="label" Content="Recommended max PO2:&#xA;1.4 for working depth&#xA;1.6 for decompression depth"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
