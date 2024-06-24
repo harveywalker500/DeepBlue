@@ -135,5 +135,11 @@ namespace DeepBlue
                 MessageBox.Show("Error! Unit is not set. Please double check and try again.");
             }
         }
+
+        private void GasRequirementEstimateMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            GasRequirementEstimate gasRequirementEstimate = new GasRequirementEstimate(Unit, Water, Rounding);
+            gasRequirementEstimate.Show();
+        }
     }
 }

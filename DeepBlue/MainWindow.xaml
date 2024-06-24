@@ -23,6 +23,7 @@
                     <MenuItem x:Name="EADMenuItem" Header="EAD" Click="EADMenuItem_Click"></MenuItem>
                     <MenuItem x:Name="MaxDepthMenuItem" Header="Max Depth" Click="MaxDepthMenuItem_Click"></MenuItem>
                     <MenuItem x:Name="SACRateMenuItem" Header="SAC Rate" Click="SACRateMenuItem_Click"></MenuItem>
+                    <MenuItem x:Name="GasRequirementEstimateMenuItem" Header="Gas Requirement Estimate" Click="GasRequirementEstimateMenuItem_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem x:Name="MenuHelp" Header="Help">
                     <MenuItem x:Name="ShowDisclaimer" Header="Show Disclaimer" Click="ShowDisclaimer_Click"></MenuItem>
