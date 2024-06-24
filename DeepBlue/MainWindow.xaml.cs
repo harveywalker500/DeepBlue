@@ -31,10 +31,6 @@ namespace DeepBlue
                 this.Water = WaterTypes.Salt;
                 WaterTypeSalt.IsSelected = true;
             }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show("Disclaimer file not found. Please ensure that the file 'disclaimer.txt' is in the same directory as the executable.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
             catch (Exception)
             {
                 MessageBox.Show("Error reading disclaimer file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -120,6 +116,24 @@ namespace DeepBlue
         {
             MaxDepth maxDepth = new MaxDepth(Unit, Water, Rounding);
             maxDepth.Show();
+        }
+
+        private void SACRateMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (Unit == UnitTypes.Meters)
+            {
+                SACRateMetric SACRate = new SACRateMetric(Unit, Water, Rounding);
+                SACRate.Show();
+            }
+            else if (Unit == UnitTypes.Feet)
+            {
+                SACRateImperial SACRate = new SACRateImperial(Unit, Water, Rounding);
+                SACRate.Show();
+            }
+            else
+            {
+                MessageBox.Show("Error! Unit is not set. Please double check and try again.");
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeepBlue.FormulaWindows"
         mc:Ignorable="d"
-        Title="AscentDepth" SizeToContent="WidthAndHeight">
+        Title="Ascent Depth" SizeToContent="WidthAndHeight">
     <Grid>
         <StackPanel x:Name="AscentDepthSP" HorizontalAlignment="Left" Margin="10,10,10,10" Orientation="Vertical" VerticalAlignment="Top" Height="144" Width="200">
             <Label x:Name="AscentDepthTitle" Content="Ascent Depth" HorizontalAlignment="Center"/>
