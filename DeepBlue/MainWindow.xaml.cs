@@ -141,5 +141,23 @@ namespace DeepBlue
             GasRequirementEstimate gasRequirementEstimate = new GasRequirementEstimate(Unit, Water, Rounding);
             gasRequirementEstimate.Show();
         }
+
+        private void TurnPressureMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (Unit == UnitTypes.Meters)
+            {
+                TurnPressureMetric turnPressure = new TurnPressureMetric(Unit, Water, Rounding);
+                turnPressure.Show();
+            }
+            else if (Unit == UnitTypes.Feet)
+            {
+                TurnPressureImperial turnPressure = new TurnPressureImperial(Unit, Water, Rounding);
+                turnPressure.Show();
+            }
+            else
+            {
+                MessageBox.Show("Error! Unit is not set. Please double check and try again.");
+            }
+        }
     }
 }
