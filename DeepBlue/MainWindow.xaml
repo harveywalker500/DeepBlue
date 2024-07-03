@@ -1,12 +1,79 @@
-﻿<Window x:Class="DeepBlue.MainWindow"
+﻿<Window x:Name="DeepBlue" x:Class="DeepBlue.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeepBlue"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="DeepBlue" Height="600" Width="1000">
     <Grid>
+        <StackPanel Orientation="Vertical">
+            <Menu x:Name="TopMenu" Height="Auto">
+                <MenuItem x:Name="MenuFile" Header="File"></MenuItem>
+                <MenuItem x:Name="MenuEdit" Header="Edit"></MenuItem>
+                <MenuItem x:Name="MenuView" Header="View"></MenuItem>
+                <MenuItem x:Name="MenuFormulas" Header="Formulas">
+                    <MenuItem x:Name="AtmDepthMenuItem" Header="ATM / Depth" Click="AtmDepthMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="MetresFeetMenuItem" Header="Metres / Feet" Click="MetresFeetMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="PO2TriangleMenuItem" Header="PO2 / FO2 / P" Click="PO2TriangleMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="GasReserveMenuItem" Header="Gas Reserve" Click="GasReserveMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="AscentDepthMenuItem" Header="Ascent Depth" Click="AscentDepthMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="AscentTimeMenuItem" Header="Ascent Time" Click="AscentTimeMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="OTUsMenuItem" Header="OTU Per Minute / Total OTUs" Click="OTUsMenuItem_OnClick"></MenuItem>
+                    <MenuItem x:Name="EADMenuItem" Header="EAD" Click="EADMenuItem_Click"></MenuItem>
+                    <MenuItem x:Name="MaxDepthMenuItem" Header="Max Depth" Click="MaxDepthMenuItem_Click"></MenuItem>
+                    <MenuItem x:Name="SACRateMenuItem" Header="SAC Rate" Click="SACRateMenuItem_Click"></MenuItem>
+                    <MenuItem x:Name="GasRequirementEstimateMenuItem" Header="Gas Requirement Estimate" Click="GasRequirementEstimateMenuItem_Click"></MenuItem>
+                    <MenuItem x:Name="TurnPressureMenuItem" Header="Turn Pressure" Click="TurnPressureMenuItem_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem x:Name="MenuHelp" Header="Help">
+                    <MenuItem x:Name="ShowDisclaimer" Header="Show Disclaimer" Click="ShowDisclaimer_Click"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <TabControl x:Name="MainTab" Height="549" Width="1000">
+                <TabItem x:Name="FormulasTab" Header="Formulas">
+                    <Grid x:Name="FormulasGrid" Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="150"/>
+                            <ColumnDefinition MinWidth="150"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
 
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="SettingsTab" Header="Settings">
+                    <Grid x:Name="SettingsGrid" Background="#FFE5E5E5">
+                        <Grid x:Name="Units" HorizontalAlignment="Left" Height="48" Margin="10,15,0,0" VerticalAlignment="Top" Width="120">
+                            <Label x:Name="UnitsLabel" Content="Units" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="UnitsComboBox" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="UnitsComboBox_SelectionChanged"
+                                ToolTip="Metric will use metres and BAR, while Imperial will use feet and PSI.">
+                                <ComboBoxItem x:Name="UnitsCBMetric" Content="Metric"/>
+                                <ComboBoxItem x:Name="UnitsCBImperial" Content="Imperial"/>
+                            </ComboBox>
+                        </Grid>
+                        <Grid x:Name="WaterType" HorizontalAlignment="Left" Height="48" Margin="135,15,0,0" VerticalAlignment="Top" Width="120">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label x:Name="WaterTypeLabel" Content="Water Type" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <ComboBox x:Name="WaterTypeComboBox" HorizontalAlignment="Center" Margin="0,26,0,0" VerticalAlignment="Top" Width="120" Grid.RowSpan="2">
+                                <ComboBoxItem x:Name="WaterTypeSalt" Content="Salt Water"/>
+                                <ComboBoxItem x:Name="WaterTypeFresh" Content="Fresh Water"/>
+                            </ComboBox>
+                        </Grid>
+                        <Grid x:Name="RoundingSP" HorizontalAlignment="Left" Height="46" VerticalAlignment="Top" Width="76" Margin="260,16,0,0">
+                            <Label x:Name="RoundingLabel" Content="Rounding" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Grid x:Name="RoundingComboBox" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,31,0,0">
+                                <RadioButton x:Name="RoundingOn" Content="On" GroupName="Rounding" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="RoundingOn_Checked" 
+                                    ToolTip="Selecting rounding will display all calculations as a 2 significant figure decimal number. This will ensure that the text is readable. All internal calculations will not be rounded."/>
+                                <RadioButton x:Name="RoundingOff" Content="Off" GroupName="Rounding" HorizontalAlignment="Left" Margin="40,0,0,0" VerticalAlignment="Top" Checked="RoundingOff_Checked" 
+                                    ToolTip="Selecting rounding will display all calculations as a 2 significant figure decimal number. This will ensure that the text is readable. All internal calculations will not be rounded."/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
     </Grid>
 </Window>

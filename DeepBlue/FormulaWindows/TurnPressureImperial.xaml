@@ -1,0 +1,41 @@
+﻿<Window x:Class="DeepBlue.FormulaWindows.TurnPressureImperial"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeepBlue.FormulaWindows"
+        mc:Ignorable="d"
+        Title="Turn Pressure" SizeToContent="WidthAndHeight">
+    <Grid>
+        <StackPanel x:Name="TurnPressureSP" HorizontalAlignment="Left" Margin="10,10,10,10" Orientation="Vertical" VerticalAlignment="Top" Height="Auto" Width="Auto">
+            <Label x:Name="TurnPressureMetricTitle" Content="Turn Pressure" HorizontalAlignment="Center"/>
+            <Grid x:Name="StartingPressureGrid" Height="26" Width="200" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="StartingPressureTitle" Content="Starting Pressure" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="100"/>
+                <TextBox x:Name="TurnPressure_StartingPressure" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1" Height="18"/>
+            </Grid>
+            <Grid x:Name="BottomVolumeGrid" Height="26" Width="Auto" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="BottomVolumeTitle" Content="Bottom Volume" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                <TextBox x:Name="TurnPressure_BottomVolume" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1"/>
+            </Grid>
+            <Grid x:Name="CylinderCapacityGrid" Height="26" Width="Auto" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="CylinderCapacityGrid1" Content="Cylinder Baseline" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="Auto"/>
+                <TextBox x:Name="TurnPressure_CylinderCapacity" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1" Height="18"/>
+            </Grid>
+            <Button x:Name="TurnPressureCalculate" Content="Calculate Turn Pressure" Click="GasRequirementEstimateCalculate_Click" Margin="0,10,0,0"/>
+            <TextBlock x:Name="TurnPressureResult" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0"><Run Language="en-gb" Text="Turn Pressure:"/></TextBlock>
+        </StackPanel>
+
+    </Grid>
+</Window>

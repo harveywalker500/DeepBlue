@@ -1,0 +1,47 @@
+﻿<Window x:Class="DeepBlue.FormulaWindows.OTUs"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeepBlue.FormulaWindows"
+        mc:Ignorable="d"
+        Title="OTUs" SizeToContent="WidthAndHeight">
+    <Grid>
+        <StackPanel x:Name="OTUsPerMinute" HorizontalAlignment="Left" Margin="10,10,19,10" Orientation="Vertical" VerticalAlignment="Top" Height="144" Width="200">
+            <Label x:Name="OTUsPerMinuteTitle" Content="OTUs Per Minute" HorizontalAlignment="Center"/>
+            <Grid x:Name="PO2Grid" Height="26" Width="Auto" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="PO2Title" Content="PO2" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="OTUsPerMinute_PO2" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1"/>
+            </Grid>
+            <Button x:Name="OTUsPerMinuteCalculate" Content="Calculate OTUs Per Minute" Margin="0,10,0,0" Click="OTUsPerMinuteCalculate_OnClick"/>
+            <TextBlock x:Name="OTUsPerMinuteResult" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0"><Run Language="en-gb" Text="OTUs Per Minute:"/></TextBlock>
+
+        </StackPanel>
+        <StackPanel x:Name="OTUsTimePanel" HorizontalAlignment="Left" Margin="215,10,10,10" Orientation="Vertical" VerticalAlignment="Top" Height="144" Width="200">
+            <Label x:Name="OTUsTimeTitle" Content="OTUs Time Calculation" HorizontalAlignment="Center"/>
+            <Grid x:Name="OTUsGrid" Height="26" Width="Auto" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="OTUsTitle" Content="OTU / Minute" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <TextBox x:Name="OTUsTime_OTUsPerMinute" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1"/>
+            </Grid>
+            <Grid x:Name="TimeGrid" Height="26" Width="200" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="TimeTitle" Content="Time" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26" Width="100"/>
+                <TextBox x:Name="OTUsTime_Time" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="80" Grid.Column="1" Height="18"/>
+            </Grid>
+            <Button x:Name="OTUsTimeCalculate" Content="Calculate OTUs Time" Click="OTUsTimeCalculate_OnClick" Margin="0,10,0,0"/>
+            <TextBlock x:Name="OTUsTimeResult" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0"><Run Language="en-gb" Text="OTUs Time"/><Run Text=":"/></TextBlock>
+        </StackPanel>
+
+    </Grid>
+</Window>
