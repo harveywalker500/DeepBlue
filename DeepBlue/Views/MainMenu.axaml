@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DeepBlue.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DeepBlue.Views.MainMenu"
+        x:DataType="vm:MainMenuViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="DeepBlue">
+
+    <Design.DataContext>
+        <vm:MainMenuViewModel />
+    </Design.DataContext>
+    <StackPanel>
+        <Menu x:Name="TopMenu">
+            <MenuItem x:Name="MenuFile" Header="File"></MenuItem>
+            <MenuItem x:Name="MenuEdit" Header="Edit"></MenuItem>
+            <MenuItem x:Name="MenuView" Header="View"></MenuItem>
+            <MenuItem x:Name="MenuFormulas" Header="Formulas">
+                <MenuItem x:Name="AtmDepthMenuItem" Header="ATM / Depth" Command="{Binding AtmDepthCommand}"></MenuItem>
+                <MenuItem x:Name="MetresFeetMenuItem" Header="Metres / Feet" Command="{Binding MetresFeetCommand}"></MenuItem>
+                <MenuItem x:Name="PO2TriangleMenuItem" Header="PO2 / FO2 / P" Command="{Binding PO2TriangleCommand}"></MenuItem>
+                <MenuItem x:Name="GasReserveMenuItem" Header="Gas Reserve" Command="{Binding GasReserveCommand}"></MenuItem>
+                <MenuItem x:Name="AscentDepthMenuItem" Header="Ascent Depth" Command="{Binding AscentDepthCommand}"></MenuItem>
+                <MenuItem x:Name="AscentTimeMenuItem" Header="Ascent Time" Command="{Binding AscentTimeCommand}"></MenuItem>
+                <MenuItem x:Name="OTUsMenuItem" Header="OTU Per Minute / Total OTUs" Command="{Binding OTUsCommand}"></MenuItem>
+                <MenuItem x:Name="EADMenuItem" Header="EAD" Command="{Binding EADCommand}"></MenuItem>
+                <MenuItem x:Name="MaxDepthMenuItem" Header="Max Depth" Command="{Binding MaxDepthCommand}"></MenuItem>
+                <MenuItem x:Name="SACRateMenuItem" Header="SAC Rate" Command="{Binding SACRateCommand}"></MenuItem>
+                <MenuItem x:Name="GasRequirementEstimateMenuItem" Header="Gas Requirement Estimate"
+                          Command="{Binding GasRequirementEstimateCommand}">
+                </MenuItem>
+                <MenuItem x:Name="TurnPressureMenuItem" Header="Turn Pressure" Command="{Binding TurnPressureCommand}"></MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="MenuHelp" Header="Help">
+                <MenuItem x:Name="ShowDisclaimer" Header="Show Disclaimer" Command="{Binding ShowDisclaimerCommand}"></MenuItem>
+            </MenuItem>
+        </Menu>
+    </StackPanel>
+</Window>
