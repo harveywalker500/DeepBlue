@@ -1,6 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
+using DeepBlue.Models.ZHL_16;
+using DeepBlue.Views.FormulaWindows;
+using static DeepBlue.GlobalEnums;
 
 namespace DeepBlue.ViewModels
 {
@@ -8,6 +12,10 @@ namespace DeepBlue.ViewModels
     {
         [ObservableProperty]
         private string greeting;
+        
+        public UnitTypes Unit { get; set; }
+        public WaterTypes WaterType { get; set; }
+        public bool Rounding { get; set; }
 
         public ICommand AtmDepthCommand { get; }
         public ICommand MetresFeetCommand { get; }
@@ -25,7 +33,14 @@ namespace DeepBlue.ViewModels
 
         public MainMenuViewModel()
         {
-            Greeting = "Welcome to DeepBlue";
+            Greeting = "Welcome to DeepBlue.UI";
+            
+            Zhl16 Zhl16 = new Zhl16(20, 80);
+            Console.WriteLine($"ZHL-16 successfully initialized.");
+            foreach (var compartment in Zhl16.Compartments)  
+            {
+                Console.WriteLine(compartment);
+            }
 
             AtmDepthCommand = new RelayCommand(OnAtmDepth);
             MetresFeetCommand = new RelayCommand(OnMetresFeet);
@@ -46,7 +61,12 @@ namespace DeepBlue.ViewModels
         private void OnMetresFeet() { /* Implement logic here */ }
         private void OnPO2Triangle() { /* Implement logic here */ }
         private void OnGasReserve() { /* Implement logic here */ }
-        private void OnAscentDepth() { /* Implement logic here */ }
+
+        private void OnAscentDepth()
+        {
+            var ascentDepthWindow = new AscentDepth(Unit, WaterType, Rounding);
+            ascentDepthWindow.Show();
+        }
         private void OnAscentTime() { /* Implement logic here */ }
         private void OnOTUs() { /* Implement logic here */ }
         private void OnEAD() { /* Implement logic here */ }

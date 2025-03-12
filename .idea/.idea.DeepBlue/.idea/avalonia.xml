@@ -3,7 +3,12 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="DeepBlue.UI/App.axaml" value="DeepBlue.UI/DeepBlue.UI.csproj" />
+        <entry key="DeepBlue.UI/Views/FormulaWindows/AscentDepth.axaml" value="DeepBlue.UI/DeepBlue.UI.csproj" />
+        <entry key="DeepBlue.UI/Views/MainMenu.axaml" value="DeepBlue.UI/DeepBlue.UI.csproj" />
         <entry key="DeepBlue/App.axaml" value="DeepBlue/DeepBlue.csproj" />
+        <entry key="DeepBlue/Views/FormulaWindows/AscentDepth.axaml" value="DeepBlue/DeepBlue.csproj" />
+        <entry key="DeepBlue/Views/HomeMenu.axaml" value="DeepBlue/DeepBlue.csproj" />
         <entry key="DeepBlue/Views/MainWindow.axaml" value="DeepBlue/DeepBlue.csproj" />
       </map>
     </option>
