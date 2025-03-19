@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
+using DeepBlue.Models;
 using DeepBlue.Models.ZHL_16;
 using DeepBlue.Views.FormulaWindows;
 using static DeepBlue.GlobalEnums;
@@ -34,8 +36,8 @@ namespace DeepBlue.ViewModels
         public MainMenuViewModel()
         {
             Greeting = "Welcome to DeepBlue.UI";
-            
-            Zhl16 Zhl16 = new Zhl16(20, 80);
+            List<Gas> gasList = new List<Gas>();
+            Zhl16 Zhl16 = new Zhl16(20, 80, gasList: gasList, 1, 0.0567);
             Console.WriteLine($"ZHL-16 successfully initialized.");
             foreach (var compartment in Zhl16.Compartments)  
             {

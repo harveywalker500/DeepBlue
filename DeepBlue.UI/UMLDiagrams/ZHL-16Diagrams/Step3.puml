@@ -1,0 +1,38 @@
+﻿@startuml Step3_Dive_Loadings
+title Step 3 – Dive Loadings (Dive_Loadings Function)
+
+start
+:Input Dive Parameters;
+note right
+Bottom Time, Depth, fN2, fHe, WATERVAPOUR
+end note
+
+
+repeat :For each tissue i (1 to 16):
+  partition "For Nitrogen" {
+    note right
+      Use Instantaneous Equation:
+      P = Po + (Pi - Po)*(1 - 2^(-t/half-time))
+    end note
+    :Set Po = Pn[i];
+    :Calculate Pi = (Depth - WATERVAPOUR) * fN2;
+    :Set t = Bottom Time;
+    :Update Pn[i] = Po + (Pi - Po) * (1 - 2^(-t / (nitrogen half-time[i])));
+  }
+  
+  partition "For Helium" {
+    note right
+      Use Instantaneous Equation:
+      P = Po + (Pi - Po)*(1 - 2^(-t/half-time))
+    end note
+    :Set Po = Ph[i];
+    :Calculate Pi = (Depth - WATERVAPOUR) * fHe;
+    :Set t = Bottom Time;
+    :Update Ph[i] = Po + (Pi - Po) * (1 - 2^(-t / (helium half-time[i])));
+  }
+repeat while (more tissues remain)
+
+:Return updated tissue arrays (Pn, Ph);
+stop
+
+@enduml

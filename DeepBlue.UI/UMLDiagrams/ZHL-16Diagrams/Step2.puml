@@ -1,0 +1,43 @@
+﻿@startuml Step2_Descent_Gas_Loadings
+title Step 2 – Descent Gas Loading (Descent_Gas_Loadings Function)
+
+start
+:Input Parameters;
+note right
+Depth, DESCENT_RATE, fN2, fHe, WATERVAPOUR
+end note
+
+:Calculate descent time t = Depth / DESCENT_RATE;
+
+repeat
+  :For each tissue i (1 to 16);
+  
+  partition "For Nitrogen" {
+    note right
+      Use Schreiner Equation:
+      P = Pio + R*(t - 1/k) - (Pio - Po - R/k)*exp(-k*t)
+    end note
+    :Set Po = Pn[i];
+    :Set Pio = (Depth - WATERVAPOUR) * fN2;
+    :Set R = DESCENT_RATE * fN2;
+    :Calculate k = ln(2) / (nitrogen half-time[i]);
+    :Update Pn[i] = Pio + R*(t - 1/k) - (Pio - Po - R/k)*exp(-k*t);
+  }
+  
+  partition "For Helium"
+        note right
+          Use Schreiner Equation:
+          P = Pio + R*(t - 1/k) - (Pio - Po - R/k)*exp(-k*t)
+        end note
+        :Set Po = Ph[i];
+        :Set Pio = (Depth - WATERVAPOUR) * fHe;
+        :Set R = DESCENT_RATE * fHe;
+        :Calculate k = ln(2) / (helium half-time[i]);
+        :Update Ph[i] = Pio + R*(t - 1/k) - (Pio - Po - R/k)*exp(-k*t);
+    }
+repeat while (more tissues remain)
+
+:Return updated tissue arrays (Pn, Ph);
+stop
+
+@enduml

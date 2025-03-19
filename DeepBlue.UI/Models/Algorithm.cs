@@ -8,12 +8,12 @@ public interface IAlgorithm
     List<DiveLevel> DiveLevels { get; set; }
     List<Gas> GasList { get; set; }
 
-    public void Initialize(List<DiveLevel> diveLevels);
+    public void Initialize();
     public DiveLevel GetDiveLevel(List<DiveLevel> diveLevels);
-    public void CalculateDescent();
-    public void CalculateAtDepth();
+    public void CalculateDescent(DiveLevel diveLevel, int decentRate);
+    public void CalculateAtDepth(DiveLevel diveLevel);
     public void CalculateAscent();
-    public DiveLevel CalculateAscentCeiling();
-    public DiveLevel CalculateNDL();
+    public double CalculateAscentCeiling(bool rounding);
+    public DiveLevel CalculateNoDecoLimit();
     public void DetermineSuitableGas();
 }

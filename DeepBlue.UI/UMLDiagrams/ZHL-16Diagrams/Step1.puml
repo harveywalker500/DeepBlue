@@ -1,0 +1,15 @@
+﻿@startuml Step1_Initialise_Tissues
+title Step 1 – Initialise the Model (Initialise_Tissues Function)
+
+start
+:Call Initialise_Tissues();
+repeat
+  :For tissue i (1 to 16):
+  :Set Pn[i] = 0.79 * (ATM - WATERVAPOUR);
+  :Set Ph[i] = 0;
+  :Set Pt[i] = Pn[i] + Ph[i];
+repeat while (more tissues remain)
+:Return tissue arrays (Pn, Ph, Pt);
+stop
+
+@enduml
