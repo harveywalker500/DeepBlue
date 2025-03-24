@@ -17,19 +17,14 @@ public class Zhl16 : IAlgorithm
     double Atm { get; set; }
     double Watervapour { get; set; }
     
-    public Zhl16(int gflow, int gfhigh, List<Gas> gasList, double atm, double watervapour)
+    public Zhl16(int gflow, int gfhigh, List<Gas> gasList, List<DiveLevel> diveLevels, double atm, double watervapour)
     {
         Name = "ZHL-16";
         Compartments = new List<Compartment>();
         GasList = gasList;
+        DiveLevels = diveLevels;
         Atm = atm;
         Watervapour = watervapour;
-        // For debug purposes TODO: Remove
-        gasList.Add(new Gas("21/35", 0.35, 0.21, false, 232));
-        gasList.Add(new Gas("50", 0, 0.50, true, 232));
-        
-        DiveLevels = new List<DiveLevel>();
-        DiveLevels.Add(new DiveLevel(50, 20, gasList[0], false));
         
         ImportCompartments("A:\\DeepBlue\\DeepBlue.UI\\Models\\ZHL-16\\Compartments.csv");
         
@@ -37,21 +32,24 @@ public class Zhl16 : IAlgorithm
         GfHigh = gfhigh;
         
         Initialize();
-        CalculateDive();
     }
 
     public void CalculateDive()
     {
+        DiveLevels.Add(new DiveLevel(0, 0, GasList[0], true));
         DiveLevel previousLevel = new DiveLevel(0, 0, GasList[0], false);
-        foreach (DiveLevel level in DiveLevels)
+        List<DiveLevel> divePlan = new List<DiveLevel>(DiveLevels); 
+
+        foreach (DiveLevel level in divePlan)
         {
             if (level.depth > previousLevel.depth)
             {
-                CalculateDescent(level);
+                CalculateDescent(level, GasList[0]);
             }
             else
             {
-                var ascentCeiling = CalculateAscentCeiling();
+                CalculateDecompression();
+                /*var ascentCeiling = CalculateAscentCeiling();
                 if (level.depth > ascentCeiling)
                 {
                     CalculateAscent();
@@ -59,8 +57,10 @@ public class Zhl16 : IAlgorithm
                 else
                 {
                     CalculateDecompression();
-                }
+                }*/
             }
+            
+            previousLevel = level;
         }
     }
     
@@ -79,77 +79,107 @@ public class Zhl16 : IAlgorithm
         throw new NotImplementedException();
     }
 
-    public void CalculateDescent(DiveLevel diveLevel, int decentRate = 18)
+    public void CalculateDescent(DiveLevel diveLevel, Gas gas, double descentRate = 18)
     {
-        var t = diveLevel.depth / decentRate;
+        double t = diveLevel.depth / descentRate;
 
         foreach (var compartment in Compartments)
         {
             // Nitrogen loading
             var po = compartment.PN2;
-            var pio = (diveLevel.depth - Watervapour) * compartment.PN2;
-            var r = decentRate * compartment.PN2;
-            var k = Math.Log(2)/compartment.HalfTimeN2;
-            compartment.PN2 = pio + r * (t - 1 / k) - (pio - po - r / k) * Math.Pow(Math.E, (-k * t)) ;
+            var pio = (diveLevel.depth - Watervapour) * gas.N2;
+            var r = descentRate * gas.N2;
+            var k = Math.Log(2) / compartment.HalfTimeN2;
+
+            var term1 = pio + r * (t - 1 / k);
+            var term2 = pio - po - r / k;
+            compartment.PN2 = term1 - term2 * Math.Exp(-k * t);
             
             // Helium loading
             po = compartment.PHe;
-            pio = (diveLevel.depth - Watervapour) * compartment.PHe;
+            pio = (diveLevel.depth - Watervapour) * gas.He;
+            r = descentRate * gas.He;
             k = Math.Log(2) / compartment.HalfTimeHe;
 
-            compartment.PHe = pio + r * (t - 1 / k) - (pio - po - r / k) * Math.Pow(Math.E, (-k * t));
+            compartment.PHe = pio + r * (t - (1 / k)) - (pio - po - (r / k)) * Math.Exp(-k * t);
+            
+            compartment.PTotal = compartment.PN2 + compartment.PHe;
         }
-
-        CalculateAtDepth(diveLevel);
+        Console.WriteLine($"Descent calculated for {diveLevel.depth}m.");
+        //CalculateAtDepth(diveLevel, gas);
     }
 
-    public void CalculateAtDepth(DiveLevel diveLevel)
+    public void CalculateAtDepth(DiveLevel diveLevel, Gas gas)
     {
         foreach (var compartment in Compartments)
         {
-            var pi = (diveLevel.depth - Watervapour) * compartment.PN2;
             var po = compartment.PN2;
+            var pi = (diveLevel.depth - Watervapour) * gas.N2;
             compartment.PN2 = po + (pi - po) * (1 - Math.Pow(2, -diveLevel.time / compartment.HalfTimeN2));
             
-            pi = (diveLevel.depth - Watervapour) * compartment.PHe;
+            pi = (diveLevel.depth - Watervapour) * gas.He;
             po = compartment.PHe;
             compartment.PHe = po + (pi - po) * (1 - Math.Pow(2, -diveLevel.time / compartment.HalfTimeHe));
+            
+            compartment.PTotal = compartment.PN2 + compartment.PHe;
         }
+        Console.WriteLine($"Depth {diveLevel.depth}m calculated for {diveLevel.time} minutes.");
     }
 
     public void CalculateAscent()
     {
-        throw new NotImplementedException();
+        foreach (var compartment in Compartments)
+        {
+            
+        }
     }
 
     public double CalculateAscentCeiling(bool rounding = false)
     {
         List<double> ascentCeilings = new List<double>();
+
         foreach (var compartment in Compartments)
         {
-            var a = ((compartment.AN2 * compartment.PN2) + (compartment.AHe * compartment.PHe)) /
-                (compartment.PN2 + compartment.PHe);
-            var b = ((compartment.BN2 * compartment.PN2) + (compartment.BHe * compartment.PHe)) /
-                (compartment.PN2 + compartment.PHe);
-            ascentCeilings.Add((compartment.PN2 + compartment.PHe - a) / b);
+            var aTerm1 = ((compartment.AN2 * compartment.PN2) + (compartment.AHe * compartment.PHe));
+            var a = aTerm1 / (compartment.PN2 + compartment.PHe);
+
+            var bTerm1 = ((compartment.BN2 * compartment.PN2) + (compartment.BHe * compartment.PHe));
+            var b = bTerm1 / (compartment.PN2 + compartment.PHe);
+
+            double ceiling = (compartment.PN2 + compartment.PHe - a) * b; // atm
+            ascentCeilings.Add(ceiling);
         }
+
+        var maxAscentCeiling = ascentCeilings.Max(); // atm
+        
+
         if (rounding)
         {
-            return Math.Round(ascentCeilings.Max(), 1);
+            Console.WriteLine($"Ascent Ceiling: {Math.Round(maxAscentCeiling, 2)} m.");
+            return Math.Round(maxAscentCeiling, 2);
         }
-        return ascentCeilings.Max();
+
+        Console.WriteLine($"Ascent Ceiling: {maxAscentCeiling} m.");
+        return maxAscentCeiling;
     }
 
-    public DiveLevel CalculateNoDecoLimit()
+    
+
+    public DiveLevel CalculateNoDecoLimit(DiveLevel diveLevel)
     {
-        throw new NotImplementedException();
+        diveLevel.time = 1;
+        if (Compartments.Count == 0)
+        {
+            Initialize();
+        }
+        CalculateDescent(diveLevel, GasList[0]);
+        while (CalculateAscentCeiling() < 0.1)
+        {
+            diveLevel.time++;
+            CalculateAtDepth(diveLevel, GasList[0]);
+        }
+        return diveLevel;
     }
-
-    public DiveLevel CalculateNdl()
-    {
-        throw new NotImplementedException();
-    }
-
     public void DetermineSuitableGas()
     {
         throw new NotImplementedException();
@@ -157,7 +187,25 @@ public class Zhl16 : IAlgorithm
     
     public void CalculateDecompression()
     {
-        throw new NotImplementedException();
+        double firstStop = CalculateAscentCeiling(true);
+        double lastStop = 3.0; // Last stop depth in meters
+        double stopInterval = 3.0; // Interval between stops in meters
+
+        for (double currentStop = firstStop; currentStop >= lastStop; currentStop -= stopInterval)
+        {
+            Gas decoGas = GasList.Find(gas => gas.IsDeco);
+            int stopLength = 0;
+
+            while (CalculateAscentCeiling(true) >= currentStop - stopInterval)
+            {
+                DiveLevel stopLevel = new DiveLevel((int)currentStop, 1, decoGas, true);
+                CalculateAtDepth(stopLevel, GasList[0]);
+                stopLength++;
+            }
+            // Add deco stop to DiveLevels
+            DiveLevels.Add(new DiveLevel((int)currentStop, stopLength, decoGas, true));
+            Console.WriteLine($"Stop at {currentStop}m for {stopLength} minutes.");
+        }
     }
 
 

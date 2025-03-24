@@ -1,0 +1,12 @@
+﻿@startuml
+start
+repeat :For each Tissue;
+:Calculate A = ((an2 * Pn) + (ahe * Ph)) / (Pn + Ph);
+:Calculate B = ((bn2 * Pn) + (bhe * Ph)) / (Pn + Ph);
+:Compute TissueCeiling = ((Pn + Ph) - A) * B;
+:Store TissueCeiling value;
+repeat while (more tissues remain?)
+  :Find the deepest (highest) TissueCeiling;
+  :Set Critical Ascent Ceiling = Highest Value;
+stop
+@enduml

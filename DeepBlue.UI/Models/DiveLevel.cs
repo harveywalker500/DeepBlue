@@ -10,7 +10,7 @@ public class DiveLevel
     /// <summary>
     /// Gets or sets the depth of the dive level in meters.
     /// </summary>
-    public int depth { get; set; }
+    public double depth { get; set; }
 
     /// <summary>
     /// Gets or sets the time spent at this dive level in minutes.
@@ -34,7 +34,7 @@ public class DiveLevel
     /// <param name="time">The time spent at this dive level in minutes.</param>
     /// <param name="gas">The gas used at this dive level.</param>
     /// <param name="isDecoStop">A value indicating whether this dive level is a decompression stop.</param>
-    public DiveLevel(int depth, int time, Gas gas, bool isDecoStop)
+    public DiveLevel(double depth, int time, Gas gas, bool isDecoStop)
     {
         this.depth = depth;
         this.time = time;

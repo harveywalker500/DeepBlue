@@ -37,5 +37,33 @@
                 <MenuItem x:Name="ShowDisclaimer" Header="Show Disclaimer" Command="{Binding ShowDisclaimerCommand}"></MenuItem>
             </MenuItem>
         </Menu>
+        <Grid ColumnDefinitions="*, *">
+            <TextBlock Grid.Column="0" x:Name="DecompressionPlan" Text="{Binding DecompressionPlan}" />
+            <ItemsControl Grid.Column="0" ItemsSource="{Binding DiveLevels}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding depth}" Margin="5" />
+                            <TextBlock Text="{Binding time}" Margin="5" />
+                            <TextBlock Text="{Binding gas.Name}" Margin="5" />
+                            <TextBlock Text="{Binding isDecoStop}" Margin="5" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <DataGrid Grid.Column="1" ItemsSource="{Binding Compartments}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="HalfTimeN2" Binding="{Binding HalfTimeN2}" />
+                    <DataGridTextColumn Header="HalfTimeHe" Binding="{Binding HalfTimeHe}" />
+                    <DataGridTextColumn Header="AN2" Binding="{Binding AN2}" />
+                    <DataGridTextColumn Header="BN2" Binding="{Binding BN2}" />
+                    <DataGridTextColumn Header="AHe" Binding="{Binding AHe}" />
+                    <DataGridTextColumn Header="BHe" Binding="{Binding BHe}" />
+                    <DataGridTextColumn Header="PN2" Binding="{Binding PN2}" />
+                    <DataGridTextColumn Header="PHe" Binding="{Binding PHe}" />
+                    <DataGridTextColumn Header="PTotal" Binding="{Binding PTotal}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </StackPanel>
 </Window>

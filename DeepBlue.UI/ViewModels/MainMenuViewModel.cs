@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
@@ -14,6 +16,10 @@ namespace DeepBlue.ViewModels
     {
         [ObservableProperty]
         private string greeting;
+
+        [ObservableProperty]
+        private string decompressionPlan;
+        public ObservableCollection<Compartment> Compartments { get; } = new ObservableCollection<Compartment>();
         
         public UnitTypes Unit { get; set; }
         public WaterTypes WaterType { get; set; }
@@ -33,15 +39,30 @@ namespace DeepBlue.ViewModels
         public ICommand TurnPressureCommand { get; }
         public ICommand ShowDisclaimerCommand { get; }
 
+        public ObservableCollection<DiveLevel> DiveLevels { get; } = new ObservableCollection<DiveLevel>();
+
         public MainMenuViewModel()
         {
             Greeting = "Welcome to DeepBlue.UI";
             List<Gas> gasList = new List<Gas>();
-            Zhl16 Zhl16 = new Zhl16(20, 80, gasList: gasList, 1, 0.0567);
-            Console.WriteLine($"ZHL-16 successfully initialized.");
-            foreach (var compartment in Zhl16.Compartments)  
+            
+            gasList.Add(new Gas("18/45", 0.45, 0.18, false, 232));
+            gasList.Add(new Gas("50%", 0, 0.50, false, 232));
+            
+            DiveLevels.Add(new DiveLevel(50, 25, gasList[0], false));
+            
+            Zhl16 zhl16 = new Zhl16(20, 80, gasList, DiveLevels.ToList(), 1, 0.0567);
+            zhl16.Initialize();
+            zhl16.CalculateDive();
+
+            foreach (var level in zhl16.DiveLevels)
             {
-                Console.WriteLine(compartment);
+                DiveLevels.Add(level);
+            }
+            
+            foreach (var compartment in zhl16.Compartments)
+            {
+                Compartments.Add(compartment);
             }
 
             AtmDepthCommand = new RelayCommand(OnAtmDepth);
