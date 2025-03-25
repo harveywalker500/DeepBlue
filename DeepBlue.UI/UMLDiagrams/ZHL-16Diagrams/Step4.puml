@@ -1,36 +1,25 @@
-﻿@startuml Step4_First_Decompression_Stop
-title Step 4 – Get the First Decompression Stop (Get_First_Decompression_Stop Function)
-
+﻿@startuml
 start
-:Input tissue arrays (Pn, Ph) for 16 tissues;
-:Input a(n2), b(n2), a(he), b(he) for each tissue;
-:Initialize CriticalCeiling = 0;
 
-repeat :For each tissue i (1 to 16):
-    group "Calculate Mixed a and b"
-        :a_i = ((a(n2)_i * Pn[i]) + (a(he)_i * Ph[i])) / (Pn[i] + Ph[i]);
-        :b_i = ((b(n2)_i * Pn[i]) + (b(he)_i * Ph[i])) / (Pn[i] + Ph[i]);
-    end group
-      
-    group "Compute Tissue Ascent Ceiling"
-        :Ceiling_i = ((Pn[i] + Ph[i]) - a_i) * b_i;
-    end group
-    
-    :If Ceiling_i > CriticalCeiling;
-    note right
-        Update CriticalCeiling if this tissue's ceiling is deeper
-      end note
-    :CriticalCeiling = Ceiling_i;
-    repeat while (more tissues remain)
-    
-    
-    :Round CriticalCeiling to next multiple of 3m;
-    note right
-        For example, if CriticalCeiling = 11m then FirstStop = 12m
-    end note
-    :FirstStop = ceil(CriticalCeiling/3) * 3;
-    
-    :Return FirstStop;
+:Step 4 - Get First Deco Stop Depth;
+:Set currentStop = FirstStop;
+:Set LastStop = 3msw  // or the desired last stop depth
+
+repeat
+  :Get DecoGas for current stop;
+  :Set StopLength = 0;
+  
+  repeat
+    :CalculateAtDepth|
+    :Depth = currentStop;
+    :Bottom Time = 1 min;
+    :GasMix = DecoGas;
+    :Increment StopLength by 1;
+  repeat while (AscentCeiling != (currentStop - 3msw))
+  
+  :Total stop time = StopLength minutes;
+  :Move up to next stop depth (currentStop = currentStop - 3msw);
+
+
 stop
-
 @enduml

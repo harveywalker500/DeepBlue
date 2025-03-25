@@ -38,7 +38,7 @@ public class ZHL_16Test
     {
         zhl16_test.CalculateDescent(diveLevels[0], gasList[0], 18);
         
-        Assert.That(zhl16_test.Compartments[0].PN2, Is.EqualTo(9.55864).Within(1e-5));
+        Assert.That(zhl16_test.Compartments[0].PN2, Is.EqualTo(1.524415037).Within(1e-5));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class ZHL_16Test
     {
         zhl16_test.CalculateAtDepth(diveLevels[0], gasList[0]);
 
-        Assert.That(zhl16_test.Compartments[0].PN2, Is.EqualTo(17.92483931).Within(1e-5));
+        Assert.That(zhl16_test.Compartments[0].PN2, Is.EqualTo(2.153589312).Within(1e-5));
     }
 
     [Test]
@@ -54,8 +54,11 @@ public class ZHL_16Test
     {
         zhl16_test.CalculateDescent(diveLevels[0], gasList[0], 18);
         zhl16_test.CalculateAtDepth(diveLevels[0], gasList[0]);
-        Console.WriteLine(zhl16_test.Compartments[0].PN2);
+        foreach (var compartment in zhl16_test.Compartments)
+        {
+            Console.Write(compartment);
+        }
         
-        Assert.That(zhl16_test.CalculateAscentCeiling(false), Is.InRange(10, 30));
+        Assert.That(zhl16_test.CalculateAscentCeiling(false), Is.InRange(10, 20));
     }
 }

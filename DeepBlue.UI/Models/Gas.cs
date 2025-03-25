@@ -30,6 +30,11 @@ public class Gas
     public bool IsDeco { get; set; }
     
     /// <summary>
+    /// Maximum Operating Depth of the gas.
+    /// </summary>
+    public double MaxOperatingDepth { get; set; }
+    
+    /// <summary>
     /// An integer to represent the pressure of the gas mixture in the tank.
     /// </summary>
     public int Pressure { get; set; }
@@ -70,6 +75,7 @@ public class Gas
         N2 = 1 - he - o2;
         IsDeco = isDeco;
         Pressure = pressure;
+        MaxOperatingDepth = CalculateMaxOperatingDepth();
         ValidateTank();
     }
 
@@ -77,13 +83,18 @@ public class Gas
     /// Validates a tank to ensure that the sum of He, O2, and N2 is 1. Throws an exception if the sum is not 1.
     /// </summary>
     /// <exception cref="ArgumentException">Thrown if the tank is not valid.</exception>
-    public void ValidateTank()
+    private void ValidateTank()
     {
         if (He + O2 + N2 == 1)
         {
             return;
         }
         throw new ArgumentException("Invalid tank. The sum of He, O2, and N2 must be 100.");
+    }
+
+    public double CalculateMaxOperatingDepth(float po2 = 1.6f)
+    {
+        return ((po2 * 10) / O2) - 10;
     }
     
     /// <summary>

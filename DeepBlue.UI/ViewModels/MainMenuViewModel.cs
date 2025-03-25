@@ -47,13 +47,16 @@ namespace DeepBlue.ViewModels
             List<Gas> gasList = new List<Gas>();
             
             gasList.Add(new Gas("18/45", 0.45, 0.18, false, 232));
-            gasList.Add(new Gas("50%", 0, 0.50, false, 232));
+            gasList.Add(new Gas("50%", 0, 0.50, true, 232));
+            gasList.Add(new Gas("Oxygen", 0.00, 1.00, true, 232)); 
             
             DiveLevels.Add(new DiveLevel(50, 25, gasList[0], false));
             
             Zhl16 zhl16 = new Zhl16(20, 80, gasList, DiveLevels.ToList(), 1, 0.0567);
             zhl16.Initialize();
             zhl16.CalculateDive();
+
+            DiveLevels.Clear();
 
             foreach (var level in zhl16.DiveLevels)
             {

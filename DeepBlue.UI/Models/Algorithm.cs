@@ -9,11 +9,10 @@ public interface IAlgorithm
     List<Gas> GasList { get; set; }
 
     public void Initialize();
-    public DiveLevel GetDiveLevel(List<DiveLevel> diveLevels);
     public void CalculateDescent(DiveLevel diveLevel, Gas gas, double descentRate);
     public void CalculateAtDepth(DiveLevel diveLevel, Gas gas);
-    public void CalculateAscent();
-    public double CalculateAscentCeiling(bool rounding);
+    public List<object> CalculateAtDepthDeco(DiveLevel diveLevel, Gas gas, List<object> compartments);
+    public double CalculateAscentCeiling(bool rounding, bool inMetres);
     public DiveLevel CalculateNoDecoLimit(DiveLevel diveLevel);
-    public void DetermineSuitableGas();
+    public Gas DetermineSuitableGas(double depth, List<Gas> gasList);
 }
