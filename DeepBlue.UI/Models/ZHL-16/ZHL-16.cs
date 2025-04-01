@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -25,10 +26,10 @@ public class Zhl16 : IAlgorithm
     public List<Compartment> Compartments { get; set; }
     
     /// <summary> Gradient Factor low. </summary>
-    public int GfLow { get; set; }
+    public float GfLow { get; set; }
     
     /// <summary> Gradient Factor high. </summary>
-    public int GfHigh { get; set; }
+    public float GfHigh { get; set; }
     
     /// <summary> Initial atmosphere for initializing the algorithm. Can be used to represent altitude.</summary>
     double Atm { get; set; }
@@ -53,11 +54,11 @@ public class Zhl16 : IAlgorithm
         DiveLevels = diveLevels;
         Atm = atm;
         Watervapour = watervapour;
-
+    
         Compartments = ImportCompartments("A:\\DeepBlue\\DeepBlue.UI\\Models\\ZHL-16\\Compartments.csv");
 
-        GfLow = gflow;
-        GfHigh = gfhigh;
+        GfLow = (float)(gflow / 100.0);
+        GfHigh = (float)(gfhigh / 100.0);
 
         Initialize();
     }
@@ -73,7 +74,7 @@ public class Zhl16 : IAlgorithm
 
         foreach (DiveLevel level in divePlan)
         {
-            Console.WriteLine($"Next level: {level.depth}m for {level.time} mins.");
+            Debug.WriteLine($"Next level: {level.depth}m for {level.time} mins.");
             if (level.depth > previousLevel.depth)
             {
                 CalculateDescent(level, GasList[0]);
@@ -143,7 +144,7 @@ public class Zhl16 : IAlgorithm
             compartment.PTotal = compartment.PN2 + compartment.PHe;
         }
 
-        Console.WriteLine($"Descent calculated for {diveLevel.depth}m.");
+        Debug.WriteLine($"Descent calculated for {diveLevel.depth}m.");
     }
 
     /// <summary>
@@ -168,17 +169,17 @@ public class Zhl16 : IAlgorithm
             compartment.PTotal = compartment.PN2 + compartment.PHe;
         }
 
-        Console.WriteLine($"Depth {diveLevel.depth}m calculated for {diveLevel.time} minutes.");
+        Debug.WriteLine($"Depth {diveLevel.depth}m calculated for {diveLevel.time} minutes.");
     }
 
     /// <summary>
-    /// Simulates a decompression stop at a given depth. It uses a seperate list of compartments, and does not modify the main list.
+    /// Simulates a decompression stop at a given depth. It uses a separate list of compartments, and does not modify the main list.
     /// </summary>
     /// <param name="diveLevel">Dive level to calculate decompression for.</param>
     /// <param name="gas">Gas to be used for decompression.</param>
     /// <param name="compartments">The list of compartments to be imported.</param>
     /// <returns></returns>
-    public List<object> CalculateAtDepthDeco(DiveLevel diveLevel, Gas gas, List<object> compartments)
+    public List<Compartment> CalculateAtDepthDeco(DiveLevel diveLevel, Gas gas, List<Compartment> compartments)
     {
         if (diveLevel.isDecoStop == false)
         {
@@ -216,8 +217,8 @@ public class Zhl16 : IAlgorithm
             double pTotal = compartment.PN2 + compartment.PHe;
 
             // Weighted a and b coefficients for mixed gases
-            double a = (compartment.AN2 * compartment.PN2 + compartment.AHe * compartment.PHe) / pTotal;
-            double b = (compartment.BN2 * compartment.PN2 + compartment.BHe * compartment.PHe) / pTotal;
+            double a = ((compartment.AN2 * compartment.PN2) + (compartment.AHe * compartment.PHe)) / pTotal;
+            double b = ((compartment.BN2 * compartment.PN2) + (compartment.BHe * compartment.PHe)) / pTotal;
 
             // Calculate M-value (max ambient pressure in bar)
             double mValue = (pTotal - a) / b;
@@ -235,7 +236,7 @@ public class Zhl16 : IAlgorithm
                 maxAscentCeiling = Math.Round(maxAscentCeiling, 2);
             }
 
-            Console.WriteLine($"Ascent Ceiling: {maxAscentCeiling} m.");
+            Debug.WriteLine($"Ascent Ceiling: {maxAscentCeiling} m.");
         }
         else
         {
@@ -243,42 +244,19 @@ public class Zhl16 : IAlgorithm
             {
                 maxAscentCeiling = Math.Round(maxAscentCeiling, 2);
             }
-
-            Console.WriteLine($"Ascent Ceiling: {maxAscentCeiling} bar.");
+            Debug.WriteLine($"Ascent Ceiling: {maxAscentCeiling} bar.");
         }
 
         return maxAscentCeiling;
     }
 
-    /// <summary>
-    /// Calculates the no-decompression limit for a given dive level.
-    /// </summary>
-    /// <param name="diveLevel"></param>
-    /// <returns></returns>
-    public DiveLevel CalculateNoDecoLimit(DiveLevel diveLevel)
-    {
-        diveLevel.time = 1;
-        if (Compartments.Count == 0)
-        {
-            Initialize();
-        }
-
-        CalculateDescent(diveLevel, GasList[0]);
-        while (CalculateAscentCeiling() < 0.1)
-        {
-            diveLevel.time++;
-            CalculateAtDepth(diveLevel, GasList[0]);
-        }
-
-        return diveLevel;
-    }
 
     /// <summary>
     /// Determines the most suitable gas for a list of gases based on it's Maximum Operating Depth.
     /// </summary>
     /// <param name="depth">Depth to evaluate most suitable gas.</param>
     /// <param name="gasList">Gases to be evaluated.</param>
-    /// <returns>The most suitable gas diven the depth.</returns>
+    /// <returns>The most suitable gas given the depth.</returns>
     public Gas DetermineSuitableGas(double depth, List<Gas> gasList)
     {
         return GasList
@@ -292,58 +270,30 @@ public class Zhl16 : IAlgorithm
     /// </summary>
     public void CalculateDecompression()
     {
-        // Get the first stop and round up to nearest 3m
-        var firstStop = (int)Math.Ceiling((CalculateAscentCeiling(false, true) / 3) * 3);
-        var currentStop = firstStop;
-
-        const int lastStop = 3;
         const int stopInterval = 3;
-
-        Console.WriteLine($"Starting decompression from {firstStop}m");
-        DiveLevels.Remove(DiveLevels.Last());
+        int firstStop = (int)Math.Ceiling((CalculateAscentCeiling(false, true) / stopInterval) * stopInterval);
+        const int lastStop = 3;
         
-        while (currentStop >= lastStop)
+        var currentStop = firstStop;
+        int stopLength = 0;
+        
+        while (currentStop >= (lastStop + 1) / 10) // At surface?
         {
             Gas decoGas = DetermineSuitableGas(currentStop, GasList);
-            Console.WriteLine($"Using gas {decoGas.Name} at {currentStop}m stop");
-
-            // Create a dive level for this stop
-            DiveLevel stopLevel = new DiveLevel(currentStop, 0, decoGas, true);
-
-            int stopLength = 0;
-            double nextStop = currentStop - stopInterval;
-
-            // Keep calculating tissue loadings until the ceiling drops below the next stop
-            while (true)
+            DiveLevel decoStop = new DiveLevel(currentStop, 0, decoGas, true);
+            Debug.WriteLine("Deco stop at " + currentStop + "m.");
+            do
             {
-                // Calculate tissues for 1 minute at this stop
-                CalculateAtDepth(new DiveLevel(currentStop, 1, decoGas, true), decoGas);
+                // Simulate the stops 
+                CalculateAtDepth(decoStop, decoGas);
                 stopLength++;
-
-                // Check if the ascent ceiling allows moving to the next stop
-                double ceiling = CalculateAscentCeiling(false, true);
-                Console.WriteLine($"After {stopLength} min at {currentStop}m, ceiling: {ceiling}m");
-
-                // Break if we can move to the next stop or safety limit reached
-                if (ceiling <= nextStop || stopLength >= 100)
-                {
-                    break;
-                }
-            }
-
-            // Update the stop time and add to dive plan
-            stopLevel.time = stopLength;
-            DiveLevels.Add(stopLevel);
-
-            Console.WriteLine($"Completed {stopLength} min stop at {currentStop}m");
-
-            // Move to the next stop
+                decoStop.time = stopLength;
+                
+            } while (CalculateAscentCeiling(false, true) != currentStop - stopInterval);
+            
+            DiveLevels.Add(decoStop);
             currentStop -= stopInterval;
         }
-
-        // Add a final stop at the surface
-        DiveLevels.Add(new DiveLevel(0, 0, GasList[0], true));
-        Console.WriteLine("Decompression calculation complete");
     }
 
     /// <summary>
@@ -385,7 +335,7 @@ public class Zhl16 : IAlgorithm
 }
 
 /// <summary>
-/// Reperesents a compartment in the ZHL-16 algorithm.
+/// Represents a compartment in the ZHL-16 algorithm.
 /// </summary>
 public class Compartment
 {
