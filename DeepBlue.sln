@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBlue.UI", "DeepBlue.UI\DeepBlue.UI.csproj", "{D4EBA28F-B28E-4569-B28F-2704524B5760}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBlue.Tests", "DeepBlue.Tests\DeepBlue.Tests.csproj", "{7260507F-0946-4FDB-A334-39234933EC66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBlue.Tests", "DeepBlue.Tests\DeepBlue.Tests.csproj", "{BA07C638-44DB-4351-BBEE-B988BE438029}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{D4EBA28F-B28E-4569-B28F-2704524B5760}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4EBA28F-B28E-4569-B28F-2704524B5760}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4EBA28F-B28E-4569-B28F-2704524B5760}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7260507F-0946-4FDB-A334-39234933EC66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7260507F-0946-4FDB-A334-39234933EC66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7260507F-0946-4FDB-A334-39234933EC66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7260507F-0946-4FDB-A334-39234933EC66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA07C638-44DB-4351-BBEE-B988BE438029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA07C638-44DB-4351-BBEE-B988BE438029}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA07C638-44DB-4351-BBEE-B988BE438029}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA07C638-44DB-4351-BBEE-B988BE438029}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

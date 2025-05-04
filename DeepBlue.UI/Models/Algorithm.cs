@@ -11,7 +11,8 @@ public interface IAlgorithm
     public void Initialize();
     public void CalculateDescent(DiveLevel diveLevel, Gas gas, double descentRate);
     public void CalculateAtDepth(DiveLevel diveLevel, Gas gas);
-    public double CalculateAscentCeiling(bool rounding, bool inMetres);
+    public double CalculateAscentCeiling();
+    public void CalculateDecompression();
     public DiveLevel CalculateNoDecoLimit(DiveLevel diveLevel);
     public Gas DetermineSuitableGas(double depth, List<Gas> gasList);
 }

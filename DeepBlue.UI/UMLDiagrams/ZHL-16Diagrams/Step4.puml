@@ -1,9 +1,8 @@
 ﻿@startuml
 start
 
-:Step 4 - Get First Deco Stop Depth;
 :Set currentStop = FirstStop;
-:Set LastStop = 3msw  // or the desired last stop depth
+:Set LastStop = 3msw or the desired last stop depth;
 
 repeat
   :Get DecoGas for current stop;

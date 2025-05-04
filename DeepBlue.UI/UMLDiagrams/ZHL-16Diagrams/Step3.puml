@@ -2,11 +2,6 @@
 title Step 3 – Dive Loadings (Dive_Loadings Function)
 
 start
-:Input Dive Parameters;
-note right
-Bottom Time, Depth, fN2, fHe, WATERVAPOUR
-end note
-
 
 repeat :For each tissue i (1 to 16):
   partition "For Nitrogen" {

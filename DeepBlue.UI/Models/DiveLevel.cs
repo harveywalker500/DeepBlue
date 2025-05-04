@@ -26,6 +26,11 @@ public class DiveLevel
     /// Gets or sets a value indicating whether this dive level is a decompression stop.
     /// </summary>
     public bool isDecoStop { get; set; }
+    
+    /// <summary>
+    /// Depth in ATM.
+    /// </summary>
+    public double ATM { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DiveLevel"/> class with the specified depth, time, gas, and decompression stop indicator.
@@ -40,5 +45,6 @@ public class DiveLevel
         this.time = time;
         this.gas = gas;
         this.isDecoStop = isDecoStop;
+        this.ATM = (depth / 10.0) + 1.0;
     }
 }
